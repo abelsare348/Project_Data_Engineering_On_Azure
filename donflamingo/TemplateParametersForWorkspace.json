@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "donflamingo"
+		},
+		"AzureDataLakeStorageFinalStorage_accountKey": {
+			"value": ""
+		},
+		"donflamingo-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:donflamingo.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"AzureDataLakeStorageFinalStorage_properties_typeProperties_url": {
+			"value": "https://freefinalstorageaccount.dfs.core.windows.net/"
+		},
+		"donflamingo-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://synapsestorage348.dfs.core.windows.net"
+		}
+	}
+}
