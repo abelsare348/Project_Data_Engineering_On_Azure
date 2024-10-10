@@ -1,0 +1,14 @@
+{
+	"name": "seniorpink",
+	"properties": {
+		"globalConfigurations": {
+			"PipelineBillingEnabled": "false"
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "4f932b0a-5a07-4907-87ff-818caf7212ea",
+		"tenantId": "c325150a-f395-46f2-a493-2547795d1c04"
+	}
+}

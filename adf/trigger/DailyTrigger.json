@@ -1,0 +1,38 @@
+{
+	"name": "DailyTrigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Move_Doctor_To_raw_Pipeline",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"input_folder": "hospital",
+					"input_filename": "*Doctor_Large.csv\n",
+					"output_folder": "raw/doctor",
+					"output_file_name": "Doctor"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2024-10-09T07:30:00",
+				"timeZone": "India Standard Time",
+				"schedule": {
+					"minutes": [
+						0
+					],
+					"hours": [
+						12
+					]
+				}
+			}
+		}
+	}
+}

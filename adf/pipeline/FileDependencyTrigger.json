@@ -1,0 +1,195 @@
+{
+	"name": "FileDependencyTrigger",
+	"properties": {
+		"activities": [
+			{
+				"name": "Until1",
+				"type": "Until",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('flag'), 1)",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Get Metadata1",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "FileCheckDatasets",
+									"type": "DatasetReference"
+								},
+								"fieldList": [
+									"exists"
+								],
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							}
+						},
+						{
+							"name": "If Condition1",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Get Metadata1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@activity('Get Metadata1').output.exists",
+									"type": "Expression"
+								},
+								"ifFalseActivities": [
+									{
+										"name": "Wait1",
+										"type": "Wait",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"waitTimeInSeconds": 120
+										}
+									}
+								],
+								"ifTrueActivities": [
+									{
+										"name": "Execute Pipeline1",
+										"type": "ExecutePipeline",
+										"dependsOn": [],
+										"policy": {
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"pipeline": {
+												"referenceName": "Move_Doctor_To_raw_Pipeline",
+												"type": "PipelineReference"
+											},
+											"waitOnCompletion": true
+										}
+									},
+									{
+										"name": "Set variable1",
+										"type": "SetVariable",
+										"dependsOn": [
+											{
+												"activity": "Execute Pipeline1",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "flag",
+											"value": 1
+										}
+									}
+								]
+							}
+						}
+					],
+					"timeout": "0.12:00:00"
+				}
+			},
+			{
+				"name": "SuccessEmail",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Until1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"url": "https://prod-19.northcentralus.logic.azure.com:443/workflows/f079bfe16aac458ea6761cf97e347edf/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=VrUV0KEjDFElws7IcSNAMjcDhoJNdJyGjykteM9F8bo",
+					"body": {
+						"value": "{\n        \"pipeline_name\": \"@{pipeline().Pipeline}\",\n        \"pipeline_id\": \"@{pipeline().RunId}\",\n        \"error_message\":\"None\"\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "SuccessEmail_copy1",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Until1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"url": "https://prod-19.northcentralus.logic.azure.com:443/workflows/f079bfe16aac458ea6761cf97e347edf/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=VrUV0KEjDFElws7IcSNAMjcDhoJNdJyGjykteM9F8bo",
+					"body": {
+						"value": "{\n        \"pipeline_name\": \"@{pipeline().Pipeline}\",\n        \"pipeline_id\": \"@{pipeline().RunId}\",\n        \"error_message\":\"@{activity('Execute Pipeline1').error_message}\"\n}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"flag": {
+				"type": "Integer",
+				"defaultValue": 0
+			}
+		},
+		"folder": {
+			"name": "TriggerGeneratedByActivities"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-10-09T11:24:44Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

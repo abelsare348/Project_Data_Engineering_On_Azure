@@ -1,0 +1,209 @@
+{
+	"name": "Move_Treatment_To_raw_Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": {
+								"value": "@pipeline().parameters.input_folder",
+								"type": "Expression"
+							},
+							"wildcardFileName": {
+								"value": "@pipeline().parameters.input_filename",
+								"type": "Expression"
+							},
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Treatment_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Treatment_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Treatment_Type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Treatment_Type",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Cost",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Input_dataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"input_folder": {
+								"value": "@pipeline().parameters.input_folder",
+								"type": "Expression"
+							},
+							"input_filename": {
+								"value": "@pipeline().parameters.input_filename",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "raw_op_dataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"output_folder": {
+								"value": "@pipeline().parameters.output_folder",
+								"type": "Expression"
+							},
+							"output_file": {
+								"value": "@concat(pipeline().parameters.output_file_name,'_',formatDateTime(utcNow(),'yyyy-MM-dd'))",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Delete1",
+				"type": "Delete",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "Input_dataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"input_folder": {
+								"value": "@pipeline().parameters.input_folder",
+								"type": "Expression"
+							},
+							"input_filename": {
+								"value": "@pipeline().parameters.input_filename",
+								"type": "Expression"
+							}
+						}
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureDataLakeStorageInputLinkedService",
+							"type": "LinkedServiceReference"
+						},
+						"path": "input"
+					},
+					"enableLogging": true,
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"wildcardFileName": {
+							"value": "@pipeline().parameters.input_filename",
+							"type": "Expression"
+						},
+						"enablePartitionDiscovery": false
+					}
+				}
+			}
+		],
+		"parameters": {
+			"input_folder": {
+				"type": "string",
+				"defaultValue": "hospital"
+			},
+			"input_filename": {
+				"type": "string",
+				"defaultValue": "*Treatment_Large.csv"
+			},
+			"output_folder": {
+				"type": "string",
+				"defaultValue": "raw/treatment"
+			},
+			"output_file_name": {
+				"type": "string",
+				"defaultValue": "Treatment"
+			}
+		},
+		"folder": {
+			"name": "raw_movement_pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-10-09T11:24:43Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

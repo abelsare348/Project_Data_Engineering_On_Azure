@@ -1,0 +1,40 @@
+{
+	"name": "raw_op_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageInputLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"output_folder": {
+				"type": "String",
+				"defaultValue": "raw"
+			},
+			"output_file": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().output_file",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().output_folder",
+					"type": "Expression"
+				},
+				"fileSystem": "output"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
