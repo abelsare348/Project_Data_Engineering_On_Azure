@@ -1,0 +1,16 @@
+{
+	"name": "sparkConfigurationForceIcebergPackage",
+	"properties": {
+		"configs": {
+			"spark.jars.packages": "spark.jars.packages org.apache.iceberg:iceberg-spark-runtime-3.4_2.12:1.6.1",
+			"spark.sql.extensions": "spark.sql.extensions org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions"
+		},
+		"created": "2024-10-10T14:24:39.6420000+05:30",
+		"createdBy": "savitabelsare348@gmail.com",
+		"annotations": [],
+		"configMergeRule": {
+			"artifact.currentOperation.spark.jars.packages": "replace",
+			"artifact.currentOperation.spark.sql.extensions": "replace"
+		}
+	}
+}
