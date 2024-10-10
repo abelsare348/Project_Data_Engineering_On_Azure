@@ -1,0 +1,334 @@
+{
+	"name": "Load_Refine_Treatments",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "BigDataDev",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "6879ed5c-54a2-4cad-9e60-8f06d862f5fb"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/synapse_rg/providers/Microsoft.Synapse/workspaces/donflamingo/bigDataPools/BigDataDev",
+				"name": "BigDataDev",
+				"type": "Spark",
+				"endpoint": "https://donflamingo.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/BigDataDev",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"<center><b> This notebook is used to create patient table in refine layer</b></center>\n",
+					"<table>\n",
+					"<tr><th>Title</th><th>Description</th></tr>\n",
+					"<tr><td>Creator</td><td>Aniket Belsare</td></tr>\n",
+					"<tr><td>Reviewer</td><td>Ankit Negi</td></tr>\n",
+					"<tr><td>Datasets Used</td><td>/raw/patient/Patient_YYYY_MM_DD.csv</td></tr>\n",
+					"</table>"
+				]
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"from datetime import datetime,timedelta\n",
+					"from notebookutils import mssparkutils"
+				],
+				"execution_count": 1
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"from pyspark.sql.types import StructType, StructField, StringType, IntegerType, BooleanType\n",
+					"from pyspark.sql import functions as F"
+				],
+				"execution_count": 7
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"currentDate=datetime.today()-timedelta(days=1)\n",
+					"currentDate=currentDate.strftime('%Y-%m-%d')"
+				],
+				"execution_count": 8
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"fileName='Patient'+'_'+currentDate"
+				],
+				"execution_count": 9
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"\n",
+					"rawPatientDFSchema = StructType([\n",
+					"    StructField(\"Patient_ID\", IntegerType(), True),\n",
+					"    StructField(\"Name\", StringType(), True),\n",
+					"    StructField(\"Age\", IntegerType(), True),\n",
+					"    StructField(\"Gender\", StringType(), True),\n",
+					"    StructField(\"Contact_Info\", StringType(), True),\n",
+					"    StructField(\"Medical_History\", StringType(), True),\n",
+					"    StructField(\"Active_Flag\", BooleanType(), True)\n",
+					"])"
+				],
+				"execution_count": 13
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"rawPatientDF=spark.read.option(\"header\",True).schema(rawPatientDFSchema).csv(f'abfss://output@freefinalstorageaccount.dfs.core.windows.net/raw/patient/{fileName}')"
+				],
+				"execution_count": 25
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"avgAge=rawPatientDF.agg(F.avg('Age')).first()[0]"
+				],
+				"execution_count": 17
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"rawPatientDF = rawPatientDF.withColumn(\"Name\", \n",
+					"                   F.when(rawPatientDF.Name == 'None', None).otherwise(rawPatientDF.Name)) \\\n",
+					"                   .withColumn(\"Gender\", \n",
+					"                   F.when(rawPatientDF.Gender == 'None', None).otherwise(rawPatientDF.Gender)) \\\n",
+					"                   .withColumn(\"Contact_Info\", \n",
+					"                   F.when(rawPatientDF.Contact_Info == 'None', None).otherwise(rawPatientDF.Contact_Info)) \\\n",
+					"                   .withColumn(\"Medical_History\", \n",
+					"                   F.when(rawPatientDF.Medical_History == 'None', None).otherwise(rawPatientDF.Medical_History))"
+				],
+				"execution_count": 19
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"refinedPatientDF1=rawPatientDF.fillna(0,['Patient_ID']).fillna('Unknown',['Name']).fillna(avgAge,['Age']) \\\n",
+					".fillna('Unknown',['Gender']).fillna('000-000-0000',['Contact_Info']).fillna('Unknown',['Medical_History'])"
+				],
+				"execution_count": 22
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"refinedPatientDF2=refinedPatientDF1.dropDuplicates(['Name','Age','Gender','Contact_Info'])"
+				],
+				"execution_count": 24
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"refinedPatientDFFinal=refinedPatientDF2.withColumn('Contact_Info',F.concat(F.lit('+91 '),F.regexp_replace('Contact_Info','-',''))) \\\n",
+					".withColumn('File_Name',F.lit(fileName))"
+				],
+				"execution_count": 33
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": true
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"refinedPatientDFFinal.write.format('parquet').save(f'abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/patient/table/')"
+				],
+				"execution_count": 34
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"mssparkutils.fs.mkdirs(f'abfss://output@freefinalstorageaccount.dfs.core.windows.net/archieve/patient/{currentDate}')"
+				],
+				"execution_count": 12
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"mssparkutils.fs.mv(f'abfss://output@freefinalstorageaccount.dfs.core.windows.net/raw/patient/{fileName}',f'abfss://output@freefinalstorageaccount.dfs.core.windows.net/archieve/patient/{currentDate}/')"
+				],
+				"execution_count": 13
+			}
+		]
+	}
+}
