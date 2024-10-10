@@ -1,0 +1,17 @@
+{
+	"name": "view_creation",
+	"properties": {
+		"content": {
+			"query": "CREATE VIEW dbo.Patient AS\nSELECT * FROM\nOPENROWSET(\n    BULK ('abfss://output@freefinalstorageaccount.dfs.core.windows.net/raw/patient/Dim_Patient_Large.csv',\n    'https://freefinalstorageaccount.blob.core.windows.net/output/raw/patient/Dim_Patient_Large.csv'),\n    FORMAT ='CSV',\n    PARSER_VERSION='2.0',\n    HEADER_ROW=TRUE\n) AS R;\n\nSELECT * FROM dbo.Patient;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "raw",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

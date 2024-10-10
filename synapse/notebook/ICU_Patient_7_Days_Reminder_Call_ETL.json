@@ -1,0 +1,254 @@
+{
+	"name": "ICU_Patient_7_Days_Reminder_Call_ETL",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "BigDataDev",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "fee5f160-de5b-4cb7-abc2-d45230c69b47"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/synapse_rg/providers/Microsoft.Synapse/workspaces/donflamingo/bigDataPools/BigDataDev",
+				"name": "BigDataDev",
+				"type": "Spark",
+				"endpoint": "https://donflamingo.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/BigDataDev",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"from pyspark.sql.types import StructType,StructField,StringType,IntegerType,DateType"
+				],
+				"execution_count": 8
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"schema=StructType([StructField('Visit_ID',IntegerType(),True),\n",
+					"StructField('Patient_ID',IntegerType(),True),\n",
+					"StructField('Admission_Date',DateType(),True),\n",
+					"StructField('Discharge_Date',DateType(),True),\n",
+					"StructField('Doctor_ID',IntegerType(),True),\n",
+					"StructField('Treatment_ID',IntegerType(),True),\n",
+					"StructField('ICU_Stay',StringType(),True),\n",
+					"StructField('Total_Cost',IntegerType(),True)])"
+				],
+				"execution_count": 9
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"visits_df=spark.read.option('header',True).schema(schema).csv('abfss://output@freefinalstorageaccount.dfs.core.windows.net/raw/visits/Fact_Patient_Visits_Large.csv')"
+				],
+				"execution_count": 19
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"visits_df.show(20,truncate=False)"
+				],
+				"execution_count": 12
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"patient_schema=StructType([StructField('Patient_ID',IntegerType(),True),\n",
+					"StructField('Name',StringType(),True),\n",
+					"StructField('Age',IntegerType(),True),\n",
+					"StructField('Gender',StringType(),True),\n",
+					"StructField('Contact_Info',StringType(),True),\n",
+					"StructField('Medical_History',StringType(),True),\n",
+					"StructField('Active_Flag',StringType(),True)])"
+				],
+				"execution_count": 15
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"patient_df=spark.read.option('header',True).schema(patient_schema).csv('abfss://output@freefinalstorageaccount.dfs.core.windows.net/raw/patient/Dim_Patient_Large.csv')"
+				],
+				"execution_count": 16
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"jnr_patient_visit_df=visits_df.join(patient_df,visits_df.Patient_ID==patient_df.Patient_ID,'inner').select(visits_df.ICU_Stay,visits_df.Discharge_Date,patient_df.Name,patient_df.Contact_Info)"
+				],
+				"execution_count": 24
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"from pyspark.sql import functions as F"
+				],
+				"execution_count": 25
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"ICU_released_patient_df=jnr_patient_visit_df.filter(\"ICU_Stay='Yes'\").withColumn('nextVisitDate',F.add_months(F.col('Discharge_Date'),1))"
+				],
+				"execution_count": 30
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"ICU_released_patient_next_visit_reminder_call_df=ICU_released_patient_df.filter(F.col('nextVisitDate')==F.current_date()+7)"
+				],
+				"execution_count": 40
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"ICU_released_patient_next_visit_reminder_call_df.write.mode('overwrite').csv('abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/patient/sevendays/reminderCalls/ICU_patinet_next_visits.csv')"
+				],
+				"execution_count": 41
+			}
+		]
+	}
+}

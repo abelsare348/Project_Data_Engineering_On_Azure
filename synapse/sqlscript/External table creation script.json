@@ -1,0 +1,17 @@
+{
+	"name": "External table creation script",
+	"properties": {
+		"content": {
+			"query": "\nCREATE EXTERNAL DATA SOURCE Patient_Data_Source\nWITH(\n    LOCATION='abfss://output@freefinalstorageaccount.dfs.core.windows.net'\n    );\n\nIF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') \n\tCREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] \n\tWITH ( FORMAT_TYPE = DELIMITEDTEXT ,\n\t       FORMAT_OPTIONS (\n\t\t\t FIELD_TERMINATOR = ',',\n\t\t\t FIRST_ROW = 1,\n\t\t\t USE_TYPE_DEFAULT = FALSE\n\t\t\t))\nGO\n\nCREATE EXTERNAL TABLE Patient\n(\n    [Patient_ID] bigint,\n\t[Name] nvarchar(4000),\n\t[Age] bigint,\n\t[Gender] nvarchar(4000),\n\t[Contact_Info] nvarchar(4000),\n\t[Medical_History] nvarchar(4000),\n\t[Active_Flag] nvarchar(4000)\n)\nWITH\n(\n    LOCATION='raw/patient/Dim_Patient_Large.csv',\n    DATA_SOURCE=Patient_Data_Source,\n    FILE_FORMAT=[SynapseDelimitedTextFormat]\n);\n\nSELECT top 10 * FROM dbo.Patient;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "raw",
+				"poolName": "Built-in"
+			},
+			"resultLimit": -1
+		},
+		"type": "SqlQuery"
+	}
+}

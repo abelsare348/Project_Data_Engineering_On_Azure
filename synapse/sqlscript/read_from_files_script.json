@@ -1,0 +1,17 @@
+{
+	"name": "read_from_files_script",
+	"properties": {
+		"content": {
+			"query": "SELECT TOP 10 * FROM\nOPENROWSET(\n    BULK ('abfss://output@freefinalstorageaccount.dfs.core.windows.net/raw/patient/Dim_Patient_Large.csv',\n    'https://freefinalstorageaccount.blob.core.windows.net/output/raw/patient/Dim_Patient_Large.csv'),\n    FORMAT ='CSV',\n    PARSER_VERSION='2.0',\n    HEADER_ROW=TRUE\n) AS R",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
