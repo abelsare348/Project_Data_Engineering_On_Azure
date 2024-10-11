@@ -1,0 +1,9 @@
+{
+	"name": "Load_Enterprise_Doctor_Visits_Summary",
+	"properties": {
+		"folder": {
+			"name": "Enterprise_Pipeline"
+		},
+		"annotations": []
+	}
+}
