@@ -1,0 +1,19 @@
+{
+	"name": "RefineDoctorTrigger",
+	"properties": {
+		"description": "This trigger helps in understanding that refine Doctor table has its load for the day",
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/output/blobs/refine/doctor/table/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount",
+			"events": [
+				"Microsoft.Storage.BlobCreated",
+				"Microsoft.Storage.BlobDeleted"
+			]
+		}
+	}
+}
