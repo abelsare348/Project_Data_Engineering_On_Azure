@@ -7,7 +7,7 @@
 		"pipelines": [],
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
-			"blobPathBeginsWith": "/output/blobs/archieve/patient/",
+			"blobPathBeginsWith": "/output/blobs/refine/patient/table/",
 			"ignoreEmptyBlobs": true,
 			"scope": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount",
 			"events": [
