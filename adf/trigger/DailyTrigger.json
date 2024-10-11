@@ -15,6 +15,12 @@
 					"referenceName": "FileDependencyTriggerCheckPatient",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "FileDependencyTriggerCheckTreatments",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
