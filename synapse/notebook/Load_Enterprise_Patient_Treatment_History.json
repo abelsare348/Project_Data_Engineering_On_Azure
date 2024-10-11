@@ -16,7 +16,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "b58cded4-39ad-4629-a903-b122ff19bac6"
+				"spark.autotune.trackingId": "fdc85052-d74c-4187-8727-5d7c7e01c50b"
 			}
 		},
 		"metadata": {
@@ -75,7 +75,7 @@
 					}
 				},
 				"source": [
-					"doctorDF=spark.read.format('parquet').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/doctor/table/')"
+					"doctorDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/doctor/table/')"
 				],
 				"execution_count": null
 			},
@@ -93,7 +93,7 @@
 					}
 				},
 				"source": [
-					"visitsDF=spark.read.format('parquet').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
+					"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
 				],
 				"execution_count": null
 			},
@@ -111,7 +111,100 @@
 					}
 				},
 				"source": [
-					"treatmentDF=spark.read.format('parquet').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/treatments/table/')"
+					"treatmentDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/treatments/table/')"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"patientVisitJNRDF=patientDF.alias(\"P\").join(visitsDF.alias(\"V\"),patientDF.Patient_ID==visitsDF.Patient_ID,\"inner\").Select(F.col(\"P.Patient_ID\"),\n",
+					"        F.col(\"P.Name\").alias(\"Patinet_Name\"),\n",
+					"        F.col(\"V.Admission_Date\"),\n",
+					"        F.col(\"V.Discharge_Date\"),\n",
+					"        F.col(\"V.ICU_Stay\"),\n",
+					"        F.col(\"V.Total_Cost\"))\n",
+					"\n",
+					"patientVisitDoctorJNRDF=patientVisitJNRDF.join(doctorDF,patientVisitJNRDF.Doctor_ID==doctorDF.Doctor_ID,\"inner\")\n",
+					"\n",
+					"patientVisitDoctorTreatmentJNRDF=patientVisitDoctorJNRDF.join(treatmentDF,patientVisitDoctorJNRDF.Treatment_ID==treatmentDF.Treatment_ID,\"inner\")"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"patientTreatmentHistoryDF=patientVisitDoctorTreatmentJNRDF.select(F.col(\"Patient_ID\"),\n",
+					"    F.col(\"Patient_Name\"),\n",
+					"    F.col(\"Doctor_ID\"),\n",
+					"    F.col(\"Name\").alias(\"Doctor_Name\"),\n",
+					"    F.col(\"Specialization\"),\n",
+					"    F.col(\"Treatment_ID\"),\n",
+					"    F.col(\"Treatment_Type\"),\n",
+					"    F.col(\"V.Admission_Date\"),\n",
+					"    F.col(\"V.Discharge_Date\"),\n",
+					"    F.col(\"V.ICU_Stay\"),\n",
+					"    F.col(\"V.Total_Cost\"))"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"delta_table_path = \"abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/patientTreatmentHistory/table/\"\n",
+					"\n",
+					"try:\n",
+					"    # Try to access the Delta table\n",
+					"    patientTreatmentHistoryEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
+					"\n",
+					"    # If the table exists, perform the merge operation\n",
+					"    patientTreatmentHistoryEnterpriseDF.alias(\"target\").merge(\n",
+					"        patientTreatmentHistoryDF.alias(\"source\"),\n",
+					"        \"target.patient_id = source.patient_id\",\n",
+					"        \"target.Admission_Date = source.Admission_Date\",\n",
+					"        \"target.Discharge_Date = source.Discharge_Date\"\n",
+					"    ).whenMatchedUpdateAll(\n",
+					"    ).whenNotMatchedInsertAll(\n",
+					"    ).execute()\n",
+					"\n",
+					"except AnalysisException as e:\n",
+					"\n",
+					"    print(\"Delta table does not exist. Creating a new table...\")\n",
+					"    \n",
+					"    patientTreatmentHistoryDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
 				],
 				"execution_count": null
 			}
