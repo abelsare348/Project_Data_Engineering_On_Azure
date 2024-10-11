@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "This trigger helps to find out that refinePatient table has been updated for todays date",
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [],
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
