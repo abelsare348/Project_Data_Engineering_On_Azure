@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Notebook1",
+				"name": "Enterprise_Doctor_Visits_Summary",
 				"type": "SynapseNotebook",
 				"dependsOn": [],
 				"policy": {
