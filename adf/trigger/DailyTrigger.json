@@ -27,6 +27,12 @@
 					"referenceName": "FileDependencyTriggerCheckVisits",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Load_Enterprise_Doctor_Visits_Summary",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
