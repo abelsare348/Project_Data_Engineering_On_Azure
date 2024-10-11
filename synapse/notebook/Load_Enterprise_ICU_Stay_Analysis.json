@@ -16,7 +16,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "03592b6f-c128-410d-ba23-1f6e6b6ec270"
+				"spark.autotune.trackingId": "04a547a2-5f64-4339-bcae-e58f85c1ca52"
 			}
 		},
 		"metadata": {
@@ -120,7 +120,7 @@
 					"    ICU_Stay_AnalysisEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
 					"\n",
 					"    # If the table exists, perform the merge operation\n",
-					"    treatmentCostAnalysisEnterpriseDF.alias(\"target\").merge(\n",
+					"    ICU_Stay_AnalysisEnterpriseDF.alias(\"target\").merge(\n",
 					"        ICU_Stay_AnalysisDF.alias(\"source\"),\n",
 					"        \"target.Patient_ID = source.Patient_ID\"\n",
 					"    ).whenMatchedUpdateAll(\n",
