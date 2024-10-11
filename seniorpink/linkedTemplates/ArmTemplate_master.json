@@ -1,0 +1,91 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "seniorpink"
+		},
+		"AzureDataLakeStorageInputLinkedService_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorageInputLinkedService'"
+		},
+		"AzureDataLakeStorageInputLinkedService_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://freefinalstorageaccount.dfs.core.windows.net/"
+		},
+		"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
+			"type": "string",
+			"defaultValue": "https://donflamingo.dev.azuresynapse.net"
+		},
+		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_folder": {
+			"type": "string",
+			"defaultValue": "hospital"
+		},
+		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_filename": {
+			"type": "string",
+			"defaultValue": "*Doctor_Large.csv\n"
+		},
+		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_folder": {
+			"type": "string",
+			"defaultValue": "raw/doctor"
+		},
+		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_file_name": {
+			"type": "string",
+			"defaultValue": "Doctor"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "seniorpink_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorageInputLinkedService_accountKey": {
+						"value": "[parameters('AzureDataLakeStorageInputLinkedService_accountKey')]"
+					},
+					"AzureDataLakeStorageInputLinkedService_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorageInputLinkedService_properties_typeProperties_url')]"
+					},
+					"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
+						"value": "[parameters('AzureSynapseArtifacts1_properties_typeProperties_endpoint')]"
+					},
+					"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_folder": {
+						"value": "[parameters('DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_folder')]"
+					},
+					"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_filename": {
+						"value": "[parameters('DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_filename')]"
+					},
+					"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_folder": {
+						"value": "[parameters('DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_folder')]"
+					},
+					"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_file_name": {
+						"value": "[parameters('DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_file_name')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

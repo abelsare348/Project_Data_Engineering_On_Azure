@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "seniorpink"
+		},
+		"AzureDataLakeStorageInputLinkedService_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorageInputLinkedService_properties_typeProperties_url": {
+			"value": "https://freefinalstorageaccount.dfs.core.windows.net/"
+		},
+		"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
+			"value": "https://donflamingo.dev.azuresynapse.net"
+		},
+		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_folder": {
+			"value": "hospital"
+		},
+		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_filename": {
+			"value": "*Doctor_Large.csv\n"
+		},
+		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_folder": {
+			"value": "raw/doctor"
+		},
+		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_file_name": {
+			"value": "Doctor"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
