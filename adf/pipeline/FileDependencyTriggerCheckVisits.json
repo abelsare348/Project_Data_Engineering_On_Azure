@@ -73,7 +73,7 @@
 								],
 								"ifTrueActivities": [
 									{
-										"name": "Execute Pipeline1",
+										"name": "ExecuteMove_Visits_To_raw_Pipeline",
 										"type": "ExecutePipeline",
 										"dependsOn": [],
 										"policy": {
@@ -93,7 +93,7 @@
 										"type": "SetVariable",
 										"dependsOn": [
 											{
-												"activity": "Execute Pipeline1",
+												"activity": "ExecuteMove_Visits_To_raw_Pipeline",
 												"dependencyConditions": [
 													"Succeeded"
 												]
