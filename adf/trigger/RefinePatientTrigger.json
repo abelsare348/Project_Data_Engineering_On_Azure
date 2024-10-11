@@ -1,0 +1,19 @@
+{
+	"name": "RefinePatientTrigger",
+	"properties": {
+		"description": "This trigger helps to find out that refinePatient table has been updated for todays date",
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/output/blobs/archieve/patient/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount",
+			"events": [
+				"Microsoft.Storage.BlobCreated",
+				"Microsoft.Storage.BlobDeleted"
+			]
+		}
+	}
+}
