@@ -1,0 +1,156 @@
+{
+	"name": "Load_Enterprise_Treatment_Cost_Analysis",
+	"properties": {
+		"folder": {
+			"name": "Enterprise_Pipelines"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "81377136-ea36-44e7-98ee-ba4012c7489b"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "python"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"<center>This Notebook is used to create Treatment_Cost_Analysis Table in Enterprise Level.</center>\n",
+					"\n",
+					"<table>\n",
+					"<tr><th>Title</th><th>Description</th></tr>\n",
+					"<tr><td>Creator</td><td>Aniket Belsare</td></tr>\n",
+					"<tr><td>Reviewer</td><td>Ankit Negi</td></tr>\n",
+					"<tr><td>DataSets Used</td><td><ul><li>refine_treatment</li>\n",
+					"<li>refine_visit</li>\n",
+					"</ul></td></tr>\n",
+					"</table>"
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"treatmentDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/treatments/table/')"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"treatmentCostAnalysisDF=treatmentDF.alias(\"t\") \\\n",
+					"    .join(visitDF.alias(\"v\"), \"Treatment_ID\") \\\n",
+					"    .groupBy(\"t.Treatment_ID\", \"t.Treatment_Type\") \\\n",
+					"    .agg(\n",
+					"        F.count(\"v.Visit_ID\").alias(\"Total_Treatments\"),\n",
+					"        F.sum(\"t.Cost\").alias(\"Total_Cost\"),\n",
+					"        F.avg(\"t.Cost\").alias(\"Avg_Cost_Per_Treatment\")\n",
+					"    ) \\\n",
+					"    .orderBy(F.desc(\"Total_Cost\"))"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"delta_table_path = \"abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/treatmentCostAnalysis/table/\"\n",
+					"\n",
+					"try:\n",
+					"    # Try to access the Delta table\n",
+					"    treatmentCostAnalysisEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
+					"\n",
+					"    # If the table exists, perform the merge operation\n",
+					"    treatmentCostAnalysisEnterpriseDF.alias(\"target\").merge(\n",
+					"        treatmentCostAnalysisDF.alias(\"source\"),\n",
+					"        \"target.Treatment_ID = source.Treatment_ID\",\n",
+					"        \"target.Treatment_Type = source.Treatment_Type\"\n",
+					"    ).whenMatchedUpdateAll(\n",
+					"    ).whenNotMatchedInsertAll(\n",
+					"    ).execute()\n",
+					"\n",
+					"except AnalysisException as e:\n",
+					"    print(\"Delta table does not exist. Creating a new table...\")\n",
+					"    treatmentCostAnalysisDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
+				],
+				"execution_count": null
+			}
+		]
+	}
+}
