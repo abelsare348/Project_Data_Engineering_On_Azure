@@ -1,9 +1,16 @@
 {
-	"name": "trigger2",
+	"name": "DailyTrigger",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Stopped",
-		"pipelines": [],
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "FileDependencyTriggerCheckDoctor",
+					"type": "PipelineReference"
+				}
+			}
+		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
