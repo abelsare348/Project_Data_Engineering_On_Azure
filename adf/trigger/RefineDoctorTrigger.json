@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "This trigger helps in understanding that refine Doctor table has its load for the day",
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [],
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
