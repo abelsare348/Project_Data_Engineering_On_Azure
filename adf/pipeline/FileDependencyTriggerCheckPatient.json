@@ -1,5 +1,5 @@
 {
-	"name": "FileDependencyTrigger",
+	"name": "FileDependencyTriggerCheckPatient",
 	"properties": {
 		"activities": [
 			{
@@ -82,7 +82,7 @@
 										"userProperties": [],
 										"typeProperties": {
 											"pipeline": {
-												"referenceName": "Move_Doctor_To_raw_Pipeline",
+												"referenceName": "Move_Patient_To_raw_Pipeline",
 												"type": "PipelineReference"
 											},
 											"waitOnCompletion": true
@@ -148,7 +148,7 @@
 				}
 			},
 			{
-				"name": "SuccessEmail_copy1",
+				"name": "Failure_Email",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
