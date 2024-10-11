@@ -15,6 +15,12 @@
 					"output_folder": "raw/doctor",
 					"output_file_name": "Doctor"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Load_Enterprise_Doctor_Visits_Summary",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
