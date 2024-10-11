@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "This trigger helps in understanding that refineTreatment table completed its load for the Day.",
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
