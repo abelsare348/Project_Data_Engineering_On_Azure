@@ -1,6 +1,9 @@
 {
 	"name": "Load_Refine_Visits",
 	"properties": {
+		"folder": {
+			"name": "Refine_Pipelines"
+		},
 		"nbformat": 4,
 		"nbformat_minor": 2,
 		"bigDataPool": {
@@ -17,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "d56ee24c-ec6a-4770-9b9a-560529509459"
+				"spark.autotune.trackingId": "28700af0-6c13-4ad2-be21-4afa246bc804"
 			}
 		},
 		"metadata": {
@@ -246,7 +249,23 @@
 					}
 				},
 				"source": [
-					"refinedVisitDFFinal.write.format('parquet').save(f'abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
+					"delta_table_path=\"abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/treatment/table/\"\n",
+					"\n",
+					"try:\n",
+					"    visitsRefineTable = DeltaTable.forPath(spark,delta_table_path)\n",
+					"\n",
+					"    visitsRefineTable.alias(\"target\").merge(\n",
+					"        refinedVisitDFFinal.alias(\"source\"),\n",
+					"        \"target.visit_id = source.visit_id\"\n",
+					"    ).whenMatchedUpdateAll(\n",
+					"    ).whenNotMatchedInsertAll(\n",
+					"    ).execute()\n",
+					"except Exception as e:\n",
+					"\n",
+					"    print(\"Delta table does not exist. Creating a new table...\")\n",
+					"    \n",
+					"    # Write the DataFrame to Delta format for the first time\n",
+					"    daily_df.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
 				],
 				"execution_count": 21
 			},

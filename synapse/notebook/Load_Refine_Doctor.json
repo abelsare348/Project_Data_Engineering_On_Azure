@@ -1,6 +1,9 @@
 {
 	"name": "Load_Refine_Doctor",
 	"properties": {
+		"folder": {
+			"name": "Refine_Pipelines"
+		},
 		"nbformat": 4,
 		"nbformat_minor": 2,
 		"bigDataPool": {
@@ -17,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "1eb0fd88-1f51-48a8-bf14-b4a246ad37ed"
+				"spark.autotune.trackingId": "956d9e10-92d1-477d-a28a-d961ce99f7b0"
 			}
 		},
 		"metadata": {
@@ -291,9 +294,25 @@
 					}
 				},
 				"source": [
-					"refinedDoctorDFFinal.write.format('parquet').save(f'abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/doctor/table/')"
+					"delta_table_path=\"abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/doctor/table/\"\n",
+					"\n",
+					"try:\n",
+					"    doctorsRefineTable = DeltaTable.forPath(spark,delta_table_path)\n",
+					"\n",
+					"    doctorsRefineTable.alias(\"target\").merge(\n",
+					"        refinedDoctorDFFinal.alias(\"source\"),\n",
+					"        \"target.doctor_id = source.doctor_id\"\n",
+					"    ).whenMatchedUpdateAll(\n",
+					"    ).whenNotMatchedInsertAll(\n",
+					"    ).execute()\n",
+					"except Exception as e:\n",
+					"\n",
+					"    print(\"Delta table does not exist. Creating a new table...\")\n",
+					"    \n",
+					"    # Write the DataFrame to Delta format for the first time\n",
+					"    daily_df.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
 				],
-				"execution_count": 35
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -329,7 +348,7 @@
 				"source": [
 					"mssparkutils.fs.mv(f'abfss://output@freefinalstorageaccount.dfs.core.windows.net/raw/doctor/{fileName}',f'abfss://output@freefinalstorageaccount.dfs.core.windows.net/archieve/doctor/{currentDate}/')"
 				],
-				"execution_count": 37
+				"execution_count": 1
 			}
 		]
 	}
