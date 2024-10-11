@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "This trigger helps in understanding that refine Doctor table has its load for the day",
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
