@@ -19,21 +19,21 @@
 			"type": "string",
 			"defaultValue": "https://donflamingo.dev.azuresynapse.net"
 		},
-		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_folder": {
+		"RefinePatientTrigger_properties_typeProperties_scope": {
 			"type": "string",
-			"defaultValue": "hospital"
+			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
-		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_filename": {
+		"RefineDoctorTrigger_properties_typeProperties_scope": {
 			"type": "string",
-			"defaultValue": "*Doctor_Large.csv\n"
+			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
-		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_folder": {
+		"RefineVisitTrigger_properties_typeProperties_scope": {
 			"type": "string",
-			"defaultValue": "raw/doctor"
+			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
-		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_file_name": {
+		"RefineTreatmentTrigger_properties_typeProperties_scope": {
 			"type": "string",
-			"defaultValue": "Doctor"
+			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		}
 	},
 	"variables": {
@@ -79,7 +79,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Notebook1",
+						"name": "Enterprise_Doctor_Visits_Summary",
 						"type": "SynapseNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -117,6 +117,68 @@
 						"linkedServiceName": {
 							"referenceName": "AzureSynapseArtifacts1",
 							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "SuccessEmail",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Enterprise_Doctor_Visits_Summary",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"url": "https://prod-19.northcentralus.logic.azure.com:443/workflows/f079bfe16aac458ea6761cf97e347edf/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=VrUV0KEjDFElws7IcSNAMjcDhoJNdJyGjykteM9F8bo",
+							"body": {
+								"value": "{\n        \"pipeline_name\": \"@{pipeline().Pipeline}\",\n        \"pipeline_id\": \"@{pipeline().RunId}\",\n        \"error_message\":\"None\"\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Failure_Email",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Enterprise_Doctor_Visits_Summary",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"url": "https://prod-19.northcentralus.logic.azure.com:443/workflows/f079bfe16aac458ea6761cf97e347edf/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=VrUV0KEjDFElws7IcSNAMjcDhoJNdJyGjykteM9F8bo",
+							"body": {
+								"value": "{\n        \"pipeline_name\": \"@{pipeline().Pipeline}\",\n        \"pipeline_id\": \"@{pipeline().RunId}\",\n        \"error_message\":\"@{activity('Enterprise_Doctor_Visits_Summary').output.error_message}\"\n}",
+								"type": "Expression"
+							}
 						}
 					}
 				],
@@ -2186,6 +2248,134 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/RefinePatientTrigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This trigger helps to find out that refinePatient table has been updated for todays date",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Load_Enterprise_Doctor_Visits_Summary",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/output/blobs/refine/patient/table/",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('RefinePatientTrigger_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated",
+						"Microsoft.Storage.BlobDeleted"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Load_Enterprise_Doctor_Visits_Summary')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RefineDoctorTrigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This trigger helps in understanding that refine Doctor table has its load for the day",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Load_Enterprise_Doctor_Visits_Summary",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/output/blobs/refine/doctor/table/",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('RefineDoctorTrigger_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated",
+						"Microsoft.Storage.BlobDeleted"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Load_Enterprise_Doctor_Visits_Summary')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RefineVisitTrigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This trigger helps in understanding that refineVisit table completed its load for the Day.",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Load_Enterprise_Doctor_Visits_Summary",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/output/blobs/refine/visits/table/",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('RefineVisitTrigger_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated",
+						"Microsoft.Storage.BlobDeleted"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Load_Enterprise_Doctor_Visits_Summary')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RefineTreatmentTrigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This trigger helps in understanding that refineTreatment table completed its load for the Day.",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Load_Enterprise_Doctor_Visits_Summary",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/output/blobs/refine/treatment/table/",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('RefineTreatmentTrigger_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated",
+						"Microsoft.Storage.BlobDeleted"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Load_Enterprise_Doctor_Visits_Summary')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FileDependencyTriggerCheckDoctor')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2387,664 +2577,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/FileCheckDatasets')]",
-				"[concat(variables('factoryId'), '/pipelines/Move_Doctor_To_raw_Pipeline')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FileDependencyTriggerCheckPatient')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Until1",
-						"type": "Until",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(variables('flag'), 1)",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Get Metadata1",
-									"type": "GetMetadata",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"dataset": {
-											"referenceName": "FileCheckDatasets",
-											"type": "DatasetReference",
-											"parameters": {}
-										},
-										"fieldList": [
-											"exists"
-										],
-										"storeSettings": {
-											"type": "AzureBlobFSReadSettings",
-											"recursive": true,
-											"enablePartitionDiscovery": false
-										},
-										"formatSettings": {
-											"type": "DelimitedTextReadSettings"
-										}
-									}
-								},
-								{
-									"name": "If Condition1",
-									"type": "IfCondition",
-									"dependsOn": [
-										{
-											"activity": "Get Metadata1",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"expression": {
-											"value": "@activity('Get Metadata1').output.exists",
-											"type": "Expression"
-										},
-										"ifFalseActivities": [
-											{
-												"name": "Wait1",
-												"type": "Wait",
-												"dependsOn": [],
-												"userProperties": [],
-												"typeProperties": {
-													"waitTimeInSeconds": 120
-												}
-											}
-										],
-										"ifTrueActivities": [
-											{
-												"name": "ExecuteMove_Patient_To_raw_Pipeline",
-												"type": "ExecutePipeline",
-												"dependsOn": [],
-												"policy": {
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"pipeline": {
-														"referenceName": "Move_Patient_To_raw_Pipeline",
-														"type": "PipelineReference"
-													},
-													"waitOnCompletion": true,
-													"parameters": {}
-												}
-											},
-											{
-												"name": "Set variable1",
-												"type": "SetVariable",
-												"dependsOn": [
-													{
-														"activity": "ExecuteMove_Patient_To_raw_Pipeline",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"policy": {
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"variableName": "flag",
-													"value": 1
-												}
-											}
-										]
-									}
-								}
-							],
-							"timeout": "0.12:00:00"
-						}
-					},
-					{
-						"name": "SuccessEmail",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Until1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"url": "https://prod-19.northcentralus.logic.azure.com:443/workflows/f079bfe16aac458ea6761cf97e347edf/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=VrUV0KEjDFElws7IcSNAMjcDhoJNdJyGjykteM9F8bo",
-							"body": {
-								"value": "{\n        \"pipeline_name\": \"@{pipeline().Pipeline}\",\n        \"pipeline_id\": \"@{pipeline().RunId}\",\n        \"error_message\":\"None\"\n}",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "Failure_Email",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Until1",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"url": "https://prod-19.northcentralus.logic.azure.com:443/workflows/f079bfe16aac458ea6761cf97e347edf/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=VrUV0KEjDFElws7IcSNAMjcDhoJNdJyGjykteM9F8bo",
-							"body": {
-								"value": "{\n        \"pipeline_name\": \"@{pipeline().Pipeline}\",\n        \"pipeline_id\": \"@{pipeline().RunId}\",\n        \"error_message\":\"@{activity('Get Metadata1').output.error_message}\"\n}",
-								"type": "Expression"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"variables": {
-					"flag": {
-						"type": "Integer",
-						"defaultValue": 0
-					}
-				},
-				"folder": {
-					"name": "TriggerGeneratedByActivities"
-				},
-				"annotations": [],
-				"lastPublishTime": "2024-10-09T11:24:44Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/FileCheckDatasets')]",
-				"[concat(variables('factoryId'), '/pipelines/Move_Patient_To_raw_Pipeline')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FileDependencyTriggerCheckTreatments')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Until1",
-						"type": "Until",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(variables('flag'), 1)",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Get Metadata1",
-									"type": "GetMetadata",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"dataset": {
-											"referenceName": "FileCheckDatasets",
-											"type": "DatasetReference",
-											"parameters": {}
-										},
-										"fieldList": [
-											"exists"
-										],
-										"storeSettings": {
-											"type": "AzureBlobFSReadSettings",
-											"recursive": true,
-											"enablePartitionDiscovery": false
-										},
-										"formatSettings": {
-											"type": "DelimitedTextReadSettings"
-										}
-									}
-								},
-								{
-									"name": "If Condition1",
-									"type": "IfCondition",
-									"dependsOn": [
-										{
-											"activity": "Get Metadata1",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"expression": {
-											"value": "@activity('Get Metadata1').output.exists",
-											"type": "Expression"
-										},
-										"ifFalseActivities": [
-											{
-												"name": "Wait1",
-												"type": "Wait",
-												"dependsOn": [],
-												"userProperties": [],
-												"typeProperties": {
-													"waitTimeInSeconds": 120
-												}
-											}
-										],
-										"ifTrueActivities": [
-											{
-												"name": "ExecuteMove_Treatment_To_raw_Pipeline",
-												"type": "ExecutePipeline",
-												"dependsOn": [],
-												"policy": {
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"pipeline": {
-														"referenceName": "Move_Treatment_To_raw_Pipeline",
-														"type": "PipelineReference"
-													},
-													"waitOnCompletion": true,
-													"parameters": {}
-												}
-											},
-											{
-												"name": "Set variable1",
-												"type": "SetVariable",
-												"dependsOn": [
-													{
-														"activity": "ExecuteMove_Treatment_To_raw_Pipeline",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"policy": {
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"variableName": "flag",
-													"value": 1
-												}
-											}
-										]
-									}
-								}
-							],
-							"timeout": "0.12:00:00"
-						}
-					},
-					{
-						"name": "SuccessEmail",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Until1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"url": "https://prod-19.northcentralus.logic.azure.com:443/workflows/f079bfe16aac458ea6761cf97e347edf/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=VrUV0KEjDFElws7IcSNAMjcDhoJNdJyGjykteM9F8bo",
-							"body": {
-								"value": "{\n        \"pipeline_name\": \"@{pipeline().Pipeline}\",\n        \"pipeline_id\": \"@{pipeline().RunId}\",\n        \"error_message\":\"None\"\n}",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "Failure_Email",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Until1",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"url": "https://prod-19.northcentralus.logic.azure.com:443/workflows/f079bfe16aac458ea6761cf97e347edf/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=VrUV0KEjDFElws7IcSNAMjcDhoJNdJyGjykteM9F8bo",
-							"body": {
-								"value": "{\n        \"pipeline_name\": \"@{pipeline().Pipeline}\",\n        \"pipeline_id\": \"@{pipeline().RunId}\",\n        \"error_message\":\"@{activity('Get Metadata1').output.error_message}\"\n}",
-								"type": "Expression"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"variables": {
-					"flag": {
-						"type": "Integer",
-						"defaultValue": 0
-					}
-				},
-				"folder": {
-					"name": "TriggerGeneratedByActivities"
-				},
-				"annotations": [],
-				"lastPublishTime": "2024-10-09T11:24:44Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/FileCheckDatasets')]",
-				"[concat(variables('factoryId'), '/pipelines/Move_Treatment_To_raw_Pipeline')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FileDependencyTriggerCheckVisits')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Until1",
-						"type": "Until",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(variables('flag'), 1)",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Get Metadata1",
-									"type": "GetMetadata",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"dataset": {
-											"referenceName": "FileCheckDatasets",
-											"type": "DatasetReference",
-											"parameters": {}
-										},
-										"fieldList": [
-											"exists"
-										],
-										"storeSettings": {
-											"type": "AzureBlobFSReadSettings",
-											"recursive": true,
-											"enablePartitionDiscovery": false
-										},
-										"formatSettings": {
-											"type": "DelimitedTextReadSettings"
-										}
-									}
-								},
-								{
-									"name": "If Condition1",
-									"type": "IfCondition",
-									"dependsOn": [
-										{
-											"activity": "Get Metadata1",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"expression": {
-											"value": "@activity('Get Metadata1').output.exists",
-											"type": "Expression"
-										},
-										"ifFalseActivities": [
-											{
-												"name": "Wait1",
-												"type": "Wait",
-												"dependsOn": [],
-												"userProperties": [],
-												"typeProperties": {
-													"waitTimeInSeconds": 120
-												}
-											}
-										],
-										"ifTrueActivities": [
-											{
-												"name": "ExecuteMove_Visits_To_raw_Pipeline",
-												"type": "ExecutePipeline",
-												"dependsOn": [],
-												"policy": {
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"pipeline": {
-														"referenceName": "Move_Visis_To_raw_Pipeline",
-														"type": "PipelineReference"
-													},
-													"waitOnCompletion": true,
-													"parameters": {}
-												}
-											},
-											{
-												"name": "Set variable1",
-												"type": "SetVariable",
-												"dependsOn": [
-													{
-														"activity": "ExecuteMove_Visits_To_raw_Pipeline",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"policy": {
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"variableName": "flag",
-													"value": 1
-												}
-											}
-										]
-									}
-								}
-							],
-							"timeout": "0.12:00:00"
-						}
-					},
-					{
-						"name": "SuccessEmail",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Until1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"url": "https://prod-19.northcentralus.logic.azure.com:443/workflows/f079bfe16aac458ea6761cf97e347edf/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=VrUV0KEjDFElws7IcSNAMjcDhoJNdJyGjykteM9F8bo",
-							"body": {
-								"value": "{\n        \"pipeline_name\": \"@{pipeline().Pipeline}\",\n        \"pipeline_id\": \"@{pipeline().RunId}\",\n        \"error_message\":\"None\"\n}",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "Failure_Email",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Until1",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"url": "https://prod-19.northcentralus.logic.azure.com:443/workflows/f079bfe16aac458ea6761cf97e347edf/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=VrUV0KEjDFElws7IcSNAMjcDhoJNdJyGjykteM9F8bo",
-							"body": {
-								"value": "{\n        \"pipeline_name\": \"@{pipeline().Pipeline}\",\n        \"pipeline_id\": \"@{pipeline().RunId}\",\n        \"error_message\":\"@{activity('Get Metadata1').output.error_message}\"\n}",
-								"type": "Expression"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"variables": {
-					"flag": {
-						"type": "Integer",
-						"defaultValue": 0
-					}
-				},
-				"folder": {
-					"name": "TriggerGeneratedByActivities"
-				},
-				"annotations": [],
-				"lastPublishTime": "2024-10-09T11:24:44Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/FileCheckDatasets')]",
-				"[concat(variables('factoryId'), '/pipelines/Move_Visis_To_raw_Pipeline')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DailyTrigger')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Move_Doctor_To_raw_Pipeline",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"input_folder": "[parameters('DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_folder')]",
-							"input_filename": "[parameters('DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_filename')]",
-							"output_folder": "[parameters('DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_folder')]",
-							"output_file_name": "[parameters('DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_file_name')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2024-10-09T07:30:00",
-						"timeZone": "India Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								12
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/Move_Doctor_To_raw_Pipeline')]"
 			]
 		}

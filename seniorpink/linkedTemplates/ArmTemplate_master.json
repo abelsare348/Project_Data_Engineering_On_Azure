@@ -19,21 +19,21 @@
 			"type": "string",
 			"defaultValue": "https://donflamingo.dev.azuresynapse.net"
 		},
-		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_folder": {
+		"RefinePatientTrigger_properties_typeProperties_scope": {
 			"type": "string",
-			"defaultValue": "hospital"
+			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
-		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_filename": {
+		"RefineDoctorTrigger_properties_typeProperties_scope": {
 			"type": "string",
-			"defaultValue": "*Doctor_Large.csv\n"
+			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
-		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_folder": {
+		"RefineVisitTrigger_properties_typeProperties_scope": {
 			"type": "string",
-			"defaultValue": "raw/doctor"
+			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
-		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_file_name": {
+		"RefineTreatmentTrigger_properties_typeProperties_scope": {
 			"type": "string",
-			"defaultValue": "Doctor"
+			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
 		"containerUri": {
 			"type": "string",
@@ -71,21 +71,41 @@
 					"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
 						"value": "[parameters('AzureSynapseArtifacts1_properties_typeProperties_endpoint')]"
 					},
-					"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_folder": {
-						"value": "[parameters('DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_folder')]"
+					"RefinePatientTrigger_properties_typeProperties_scope": {
+						"value": "[parameters('RefinePatientTrigger_properties_typeProperties_scope')]"
 					},
-					"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_filename": {
-						"value": "[parameters('DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_filename')]"
+					"RefineDoctorTrigger_properties_typeProperties_scope": {
+						"value": "[parameters('RefineDoctorTrigger_properties_typeProperties_scope')]"
 					},
-					"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_folder": {
-						"value": "[parameters('DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_folder')]"
+					"RefineVisitTrigger_properties_typeProperties_scope": {
+						"value": "[parameters('RefineVisitTrigger_properties_typeProperties_scope')]"
 					},
-					"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_file_name": {
-						"value": "[parameters('DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_file_name')]"
+					"RefineTreatmentTrigger_properties_typeProperties_scope": {
+						"value": "[parameters('RefineTreatmentTrigger_properties_typeProperties_scope')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "seniorpink_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'seniorpink_ArmTemplate_0')]"
+			]
 		}
 	]
 }

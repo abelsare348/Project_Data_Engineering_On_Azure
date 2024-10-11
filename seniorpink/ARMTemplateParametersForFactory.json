@@ -14,17 +14,17 @@
 		"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
 			"value": "https://donflamingo.dev.azuresynapse.net"
 		},
-		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_folder": {
-			"value": "hospital"
+		"RefinePatientTrigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
-		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_input_filename": {
-			"value": "*Doctor_Large.csv\n"
+		"RefineDoctorTrigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
-		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_folder": {
-			"value": "raw/doctor"
+		"RefineVisitTrigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
-		"DailyTrigger_properties_Move_Doctor_To_raw_Pipeline_parameters_output_file_name": {
-			"value": "Doctor"
+		"RefineTreatmentTrigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		}
 	}
 }
