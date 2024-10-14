@@ -19,19 +19,19 @@
 			"type": "string",
 			"defaultValue": "https://donflamingo.dev.azuresynapse.net"
 		},
-		"RefinePatientTrigger_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
-		},
 		"RefineDoctorTrigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
-		"RefineVisitTrigger_properties_typeProperties_scope": {
+		"RefinePatientTrigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
 		"RefineTreatmentTrigger_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
+		},
+		"RefineVisitTrigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
@@ -71,17 +71,17 @@
 					"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
 						"value": "[parameters('AzureSynapseArtifacts1_properties_typeProperties_endpoint')]"
 					},
-					"RefinePatientTrigger_properties_typeProperties_scope": {
-						"value": "[parameters('RefinePatientTrigger_properties_typeProperties_scope')]"
-					},
 					"RefineDoctorTrigger_properties_typeProperties_scope": {
 						"value": "[parameters('RefineDoctorTrigger_properties_typeProperties_scope')]"
 					},
-					"RefineVisitTrigger_properties_typeProperties_scope": {
-						"value": "[parameters('RefineVisitTrigger_properties_typeProperties_scope')]"
+					"RefinePatientTrigger_properties_typeProperties_scope": {
+						"value": "[parameters('RefinePatientTrigger_properties_typeProperties_scope')]"
 					},
 					"RefineTreatmentTrigger_properties_typeProperties_scope": {
 						"value": "[parameters('RefineTreatmentTrigger_properties_typeProperties_scope')]"
+					},
+					"RefineVisitTrigger_properties_typeProperties_scope": {
+						"value": "[parameters('RefineVisitTrigger_properties_typeProperties_scope')]"
 					}
 				}
 			},

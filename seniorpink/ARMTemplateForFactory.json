@@ -19,19 +19,19 @@
 			"type": "string",
 			"defaultValue": "https://donflamingo.dev.azuresynapse.net"
 		},
-		"RefinePatientTrigger_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
-		},
 		"RefineDoctorTrigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
-		"RefineVisitTrigger_properties_typeProperties_scope": {
+		"RefinePatientTrigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		},
 		"RefineTreatmentTrigger_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
+		},
+		"RefineVisitTrigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/Main_Resource/providers/Microsoft.Storage/storageAccounts/freefinalstorageaccount"
 		}
@@ -3073,7 +3073,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -3138,45 +3138,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/RefinePatientTrigger')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "This trigger helps to find out that refinePatient table has been updated for todays date",
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Load_Enterprise_Doctor_Visits_Summary",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/output/blobs/refine/patient/table/",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('RefinePatientTrigger_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated",
-						"Microsoft.Storage.BlobDeleted"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Load_Enterprise_Doctor_Visits_Summary')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/RefineDoctorTrigger')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"description": "This trigger helps in understanding that refine Doctor table has its load for the day",
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -3202,13 +3170,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/RefineVisitTrigger')]",
+			"name": "[concat(parameters('factoryName'), '/RefinePatientTrigger')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "This trigger helps in understanding that refineVisit table completed its load for the Day.",
+				"description": "This trigger helps to find out that refinePatient table has been updated for todays date",
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -3220,9 +3188,9 @@
 				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
-					"blobPathBeginsWith": "/output/blobs/refine/visits/table/",
+					"blobPathBeginsWith": "/output/blobs/refine/patient/table/",
 					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('RefineVisitTrigger_properties_typeProperties_scope')]",
+					"scope": "[parameters('RefinePatientTrigger_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobCreated",
 						"Microsoft.Storage.BlobDeleted"
@@ -3240,7 +3208,7 @@
 			"properties": {
 				"description": "This trigger helps in understanding that refineTreatment table completed its load for the Day.",
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -3255,6 +3223,38 @@
 					"blobPathBeginsWith": "/output/blobs/refine/treatment/table/",
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('RefineTreatmentTrigger_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated",
+						"Microsoft.Storage.BlobDeleted"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Load_Enterprise_Doctor_Visits_Summary')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RefineVisitTrigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This trigger helps in understanding that refineVisit table completed its load for the Day.",
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Load_Enterprise_Doctor_Visits_Summary",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/output/blobs/refine/visits/table/",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('RefineVisitTrigger_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobCreated",
 						"Microsoft.Storage.BlobDeleted"
