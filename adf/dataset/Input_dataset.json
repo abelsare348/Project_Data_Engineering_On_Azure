@@ -8,7 +8,7 @@
 		"parameters": {
 			"input_folder": {
 				"type": "String",
-				"defaultValue": " hospital"
+				"defaultValue": "hospital"
 			},
 			"input_filename": {
 				"type": "String",
