@@ -206,7 +206,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "736b7a10-8ff8-42a5-97e0-791df12bf3d4"
+						"spark.autotune.trackingId": "bc546cd2-8a16-4916-9fd7-2018df9e042f"
 					}
 				},
 				"metadata": {
@@ -231,8 +231,7 @@
 						"sparkVersion": "3.4",
 						"nodeCount": 10,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -284,7 +283,6 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"visits_df=spark.read.option('header',True).schema(schema).csv('abfss://output@freefinalstorageaccount.dfs.core.windows.net/raw/visits/Fact_Patient_Visits_Large.csv')"
 						],
@@ -454,6 +452,866 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/Load_Enterprise_Doctor_Visits_Summary')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "Enterprise_Pipelines"
+				},
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "69de31c6-fdf4-4551-a68a-51a6d6b60b5f"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "python"
+					},
+					"language_info": {
+						"name": "python"
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"<center>This Notebook is used to create Patient_Treatment_History Table in Enterprise Level.</center>\n",
+							"\n",
+							"<table>\n",
+							"<tr><th>Title</th><th>Description</th></tr>\n",
+							"<tr><td>Creator</td><td>Aniket Belsare</td></tr>\n",
+							"<tr><td>Reviewer</td><td>Ankit Negi</td></tr>\n",
+							"<tr><td>DataSets Used</td><td><ul><li>refine_doctor</li>\n",
+							"<li>refine_visit</li>\n",
+							"</ul></td></tr>\n",
+							"</table>"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"doctorDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/doctor/table/')"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"doctorVisitJNRDF=doctorDF.alias(\"D\").join(visitsDF.alias(\"V\"),doctorDF.Doctor_ID==visitsDF.Doctor_ID,\"inner\").Select(F.col(\"D.Doctor_ID\"),\n",
+							"        F.col(\"D.Name\").alias(\"Doctor_Name\"),\n",
+							"        F.col(\"V.Visit_ID\"),\n",
+							"        F.col(\"V.Total_Cost\"),\n",
+							"        F.col(\"V.Patient_ID\"),\n",
+							"        F.col(\"V.Discharge_Date\"),\n",
+							"        F.col(\"V.Admission_Date\"))\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"doctorVisitSummaryDF=doctorVisitJNRDF.groupBy(\"Doctor_ID\", \"Name\") \\\n",
+							"    .agg(\n",
+							"        F.count(\"Visit_ID\").alias(\"Total_Visits_Attended\"),  \n",
+							"        F.sum(\"Total_Cost\").alias(\"Total_Revenue_Generated\"),  \n",
+							"        F.countDistinct(\"Patient_ID\").alias(\"Unique_Patients\"),  \n",
+							"        F.avg(F.datediff(\"Discharge_Date\", \"Admission_Date\")).alias(\"Avg_Length_of_Stay_Per_Patient\")  \n",
+							"    )"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"delta_table_path = \"abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/doctorVisits/table/\"\n",
+							"\n",
+							"try:\n",
+							"    # Try to access the Delta table\n",
+							"    doctorVisitSummaryEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
+							"\n",
+							"    # If the table exists, perform the merge operation\n",
+							"    doctorVisitSummaryEnterpriseDF.alias(\"target\").merge(\n",
+							"        doctorVisitSummaryDF.alias(\"source\"),\n",
+							"        \"target.Doctor_ID = source.Doctor_ID\",\n",
+							"        \"target.Name = source.Name\"\n",
+							"    ).whenMatchedUpdateAll(\n",
+							"    ).whenNotMatchedInsertAll(\n",
+							"    ).execute()\n",
+							"\n",
+							"except AnalysisException as e:\n",
+							"    print(\"Delta table does not exist. Creating a new table...\")\n",
+							"    doctorVisitSummaryDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
+						],
+						"outputs": [],
+						"execution_count": null
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Load_Enterprise_ICU_Stay_Analysis')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "Enterprise_Pipelines"
+				},
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "04a547a2-5f64-4339-bcae-e58f85c1ca52"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "python"
+					},
+					"language_info": {
+						"name": "python"
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"<center>This Notebook is used to create Treatment_Cost_Analysis Table in Enterprise Level.</center>\n",
+							"\n",
+							"<table>\n",
+							"<tr><th>Title</th><th>Description</th></tr>\n",
+							"<tr><td>Creator</td><td>Aniket Belsare</td></tr>\n",
+							"<tr><td>Reviewer</td><td>Ankit Negi</td></tr>\n",
+							"<tr><td>DataSets Used</td><td><ul><li>refine_treatment</li>\n",
+							"<li>refine_visit</li>\n",
+							"</ul></td></tr>\n",
+							"</table>"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"ICU_Stay_AnalysisDF=visitDF \\\n",
+							"    .filter(visitDF.ICU_Stay == 'Yes') \\\n",
+							"    .groupBy(\"Patient_ID\") \\\n",
+							"    .agg(\n",
+							"        F.count(\"Visit_ID\").alias(\"Total_ICU_Visits\"),\n",
+							"        F.sum(\"Total_Cost\").alias(\"Total_Cost_Incurred\"),\n",
+							"        F.avg(F.datediff(\"Discharge_Date\", \"Admission_Date\")).alias(\"Avg_Length_of_ICU_Stay\")\n",
+							"    ) \\\n",
+							"    .orderBy(F.desc(\"Total_Cost_Incurred\"))\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"delta_table_path = \"abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/ICUStayAnalysis/table/\"\n",
+							"\n",
+							"try:\n",
+							"    # Try to access the Delta table\n",
+							"    ICU_Stay_AnalysisEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
+							"\n",
+							"    # If the table exists, perform the merge operation\n",
+							"    ICU_Stay_AnalysisEnterpriseDF.alias(\"target\").merge(\n",
+							"        ICU_Stay_AnalysisDF.alias(\"source\"),\n",
+							"        \"target.Patient_ID = source.Patient_ID\"\n",
+							"    ).whenMatchedUpdateAll(\n",
+							"    ).whenNotMatchedInsertAll(\n",
+							"    ).execute()\n",
+							"\n",
+							"except AnalysisException as e:\n",
+							"    print(\"Delta table does not exist. Creating a new table...\")\n",
+							"    ICU_Stay_AnalysisDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
+						],
+						"outputs": [],
+						"execution_count": null
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Load_Enterprise_Patient_Treatment_History')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "Enterprise_Pipelines"
+				},
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "fdc85052-d74c-4187-8727-5d7c7e01c50b"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "python"
+					},
+					"language_info": {
+						"name": "python"
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"<center>This Notebook is used to create Patient_Treatment_History Table in Enterprise Level.</center>\n",
+							"\n",
+							"<table>\n",
+							"<tr><th>Title</th><th>Description</th></tr>\n",
+							"<tr><td>Creator</td><td>Aniket Belsare</td></tr>\n",
+							"<tr><td>Reviewer</td><td>Ankit Negi</td></tr>\n",
+							"<tr><td>DataSets Used</td><td><ul><li>refine_patient</li>\n",
+							"<li>refine_visit</li>\n",
+							"<li>refine_treatment</li></ul></td></tr>\n",
+							"</table>"
+						]
+					},
+					{
+						"cell_type": "code",
+						"source": [
+							"patientDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/patient/table/')"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"doctorDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/doctor/table/')"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"treatmentDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/treatments/table/')"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"patientVisitJNRDF=patientDF.alias(\"P\").join(visitsDF.alias(\"V\"),patientDF.Patient_ID==visitsDF.Patient_ID,\"inner\").Select(F.col(\"P.Patient_ID\"),\n",
+							"        F.col(\"P.Name\").alias(\"Patinet_Name\"),\n",
+							"        F.col(\"V.Admission_Date\"),\n",
+							"        F.col(\"V.Discharge_Date\"),\n",
+							"        F.col(\"V.ICU_Stay\"),\n",
+							"        F.col(\"V.Total_Cost\"))\n",
+							"\n",
+							"patientVisitDoctorJNRDF=patientVisitJNRDF.join(doctorDF,patientVisitJNRDF.Doctor_ID==doctorDF.Doctor_ID,\"inner\")\n",
+							"\n",
+							"patientVisitDoctorTreatmentJNRDF=patientVisitDoctorJNRDF.join(treatmentDF,patientVisitDoctorJNRDF.Treatment_ID==treatmentDF.Treatment_ID,\"inner\")"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"patientTreatmentHistoryDF=patientVisitDoctorTreatmentJNRDF.select(F.col(\"Patient_ID\"),\n",
+							"    F.col(\"Patient_Name\"),\n",
+							"    F.col(\"Doctor_ID\"),\n",
+							"    F.col(\"Name\").alias(\"Doctor_Name\"),\n",
+							"    F.col(\"Specialization\"),\n",
+							"    F.col(\"Treatment_ID\"),\n",
+							"    F.col(\"Treatment_Type\"),\n",
+							"    F.col(\"V.Admission_Date\"),\n",
+							"    F.col(\"V.Discharge_Date\"),\n",
+							"    F.col(\"V.ICU_Stay\"),\n",
+							"    F.col(\"V.Total_Cost\"))"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"delta_table_path = \"abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/patientTreatmentHistory/table/\"\n",
+							"\n",
+							"try:\n",
+							"    # Try to access the Delta table\n",
+							"    patientTreatmentHistoryEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
+							"\n",
+							"    # If the table exists, perform the merge operation\n",
+							"    patientTreatmentHistoryEnterpriseDF.alias(\"target\").merge(\n",
+							"        patientTreatmentHistoryDF.alias(\"source\"),\n",
+							"        \"target.patient_id = source.patient_id\",\n",
+							"        \"target.Admission_Date = source.Admission_Date\",\n",
+							"        \"target.Discharge_Date = source.Discharge_Date\"\n",
+							"    ).whenMatchedUpdateAll(\n",
+							"    ).whenNotMatchedInsertAll(\n",
+							"    ).execute()\n",
+							"\n",
+							"except AnalysisException as e:\n",
+							"\n",
+							"    print(\"Delta table does not exist. Creating a new table...\")\n",
+							"    \n",
+							"    patientTreatmentHistoryDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
+						],
+						"outputs": [],
+						"execution_count": null
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Load_Enterprise_Patient_Visit_Frequency')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "Enterprise_Pipelines"
+				},
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "c62b4cb4-62fe-429b-b066-c6b569645cbf"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "python"
+					},
+					"language_info": {
+						"name": "python"
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"<center>This Notebook is used to create Patient_Visit_Frequency Table in Enterprise Level.</center>\n",
+							"\n",
+							"<table>\n",
+							"<tr><th>Title</th><th>Description</th></tr>\n",
+							"<tr><td>Creator</td><td>Aniket Belsare</td></tr>\n",
+							"<tr><td>Reviewer</td><td>Ankit Negi</td></tr>\n",
+							"<tr><td>DataSets Used</td><td><ul>\n",
+							"<li>refine_visit</li>\n",
+							"</ul></td></tr>\n",
+							"</table>"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"patientVisitFrequencyDF=visitDF \\\n",
+							"    .groupBy(\"Patient_ID\") \\\n",
+							"    .agg(\n",
+							"        F.count(\"Visit_ID\").alias(\"Total_Visits\"),\n",
+							"        F.sum(\"Total_Cost\").alias(\"Total_Cost_Incured\"),\n",
+							"        F.avg(\"Total_Cost\").alias(\"Avg_Cost_Per_Visit\")\n",
+							"    ) \\\n",
+							"    .orderBy(F.desc(\"Total_Visits\"))\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"delta_table_path = \"abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/patientVisitFrequency/table/\"\n",
+							"\n",
+							"try:\n",
+							"    # Try to access the Delta table\n",
+							"    patientVisitFrequencyEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
+							"\n",
+							"    # If the table exists, perform the merge operation\n",
+							"    patientVisitFrequencyEnterpriseDF.alias(\"target\").merge(\n",
+							"        patientVisitFrequencyDF.alias(\"source\"),\n",
+							"        \"target.Patient_ID = source.Patient_ID\"\n",
+							"    ).whenMatchedUpdateAll(\n",
+							"    ).whenNotMatchedInsertAll(\n",
+							"    ).execute()\n",
+							"\n",
+							"except AnalysisException as e:\n",
+							"    print(\"Delta table does not exist. Creating a new table...\")\n",
+							"    patientVisitFrequencyDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
+						],
+						"outputs": [],
+						"execution_count": null
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Load_Enterprise_Treatment_Cost_Analysis')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "Enterprise_Pipelines"
+				},
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "81377136-ea36-44e7-98ee-ba4012c7489b"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "python"
+					},
+					"language_info": {
+						"name": "python"
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"<center>This Notebook is used to create Treatment_Cost_Analysis Table in Enterprise Level.</center>\n",
+							"\n",
+							"<table>\n",
+							"<tr><th>Title</th><th>Description</th></tr>\n",
+							"<tr><td>Creator</td><td>Aniket Belsare</td></tr>\n",
+							"<tr><td>Reviewer</td><td>Ankit Negi</td></tr>\n",
+							"<tr><td>DataSets Used</td><td><ul><li>refine_treatment</li>\n",
+							"<li>refine_visit</li>\n",
+							"</ul></td></tr>\n",
+							"</table>"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"treatmentDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/treatments/table/')"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"treatmentCostAnalysisDF=treatmentDF.alias(\"t\") \\\n",
+							"    .join(visitDF.alias(\"v\"), \"Treatment_ID\") \\\n",
+							"    .groupBy(\"t.Treatment_ID\", \"t.Treatment_Type\") \\\n",
+							"    .agg(\n",
+							"        F.count(\"v.Visit_ID\").alias(\"Total_Treatments\"),\n",
+							"        F.sum(\"t.Cost\").alias(\"Total_Cost\"),\n",
+							"        F.avg(\"t.Cost\").alias(\"Avg_Cost_Per_Treatment\")\n",
+							"    ) \\\n",
+							"    .orderBy(F.desc(\"Total_Cost\"))"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"delta_table_path = \"abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/treatmentCostAnalysis/table/\"\n",
+							"\n",
+							"try:\n",
+							"    # Try to access the Delta table\n",
+							"    treatmentCostAnalysisEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
+							"\n",
+							"    # If the table exists, perform the merge operation\n",
+							"    treatmentCostAnalysisEnterpriseDF.alias(\"target\").merge(\n",
+							"        treatmentCostAnalysisDF.alias(\"source\"),\n",
+							"        \"target.Treatment_ID = source.Treatment_ID\",\n",
+							"        \"target.Treatment_Type = source.Treatment_Type\"\n",
+							"    ).whenMatchedUpdateAll(\n",
+							"    ).whenNotMatchedInsertAll(\n",
+							"    ).execute()\n",
+							"\n",
+							"except AnalysisException as e:\n",
+							"    print(\"Delta table does not exist. Creating a new table...\")\n",
+							"    treatmentCostAnalysisDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
+						],
+						"outputs": [],
+						"execution_count": null
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/Load_Refine_Doctor')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
@@ -502,8 +1360,7 @@
 						"sparkVersion": "3.4",
 						"nodeCount": 10,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -529,7 +1386,6 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"from datetime import datetime,timedelta\n",
 							"from notebookutils import mssparkutils"
@@ -875,8 +1731,7 @@
 						"sparkVersion": "3.4",
 						"nodeCount": 10,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -902,7 +1757,6 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"from datetime import datetime,timedelta\n",
 							"from notebookutils import mssparkutils"
@@ -1246,8 +2100,7 @@
 						"sparkVersion": "3.4",
 						"nodeCount": 10,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -1273,7 +2126,6 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"from datetime import datetime,timedelta\n",
 							"from notebookutils import mssparkutils"
@@ -1567,8 +2419,7 @@
 						"sparkVersion": "3.4",
 						"nodeCount": 10,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -1594,7 +2445,6 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"from datetime import datetime,timedelta\n",
 							"from notebookutils import mssparkutils"
@@ -1887,867 +2737,6 @@
 			},
 			"dependsOn": [],
 			"location": "eastasia"
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/Load_Enterprise_Patient_Treatment_History')]",
-			"type": "Microsoft.Synapse/workspaces/notebooks",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"folder": {
-					"name": "Enterprise_Pipelines"
-				},
-				"nbformat": 4,
-				"nbformat_minor": 2,
-				"sessionProperties": {
-					"driverMemory": "28g",
-					"driverCores": 4,
-					"executorMemory": "28g",
-					"executorCores": 4,
-					"numExecutors": 2,
-					"conf": {
-						"spark.dynamicAllocation.enabled": "false",
-						"spark.dynamicAllocation.minExecutors": "2",
-						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "805e11ff-8885-4d83-8581-cbf28d5f4db1"
-					}
-				},
-				"metadata": {
-					"saveOutput": true,
-					"enableDebugMode": false,
-					"kernelspec": {
-						"name": "synapse_pyspark",
-						"display_name": "python"
-					},
-					"language_info": {
-						"name": "python"
-					},
-					"sessionKeepAliveTimeout": 30
-				},
-				"cells": [
-					{
-						"cell_type": "markdown",
-						"metadata": {
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"<center>This Notebook is used to create Patient_Treatment_History Table in Enterprise Level.</center>\n",
-							"\n",
-							"<table>\n",
-							"<tr><th>Title</th><th>Description</th></tr>\n",
-							"<tr><td>Creator</td><td>Aniket Belsare</td></tr>\n",
-							"<tr><td>Reviewer</td><td>Ankit Negi</td></tr>\n",
-							"<tr><td>DataSets Used</td><td><ul><li>refine_patient</li>\n",
-							"<li>refine_visit</li>\n",
-							"<li>refine_treatment</li></ul></td></tr>\n",
-							"</table>"
-						]
-					},
-					{
-						"cell_type": "code",
-						"metadata": {},
-						"source": [
-							"patientDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/patient/table/')"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"doctorDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/doctor/table/')"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"treatmentDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/treatments/table/')"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"patientVisitJNRDF=patientDF.alias(\"P\").join(visitsDF.alias(\"V\"),patientDF.Patient_ID==visitsDF.Patient_ID,\"inner\").Select(F.col(\"P.Patient_ID\"),\n",
-							"        F.col(\"P.Name\").alias(\"Patinet_Name\"),\n",
-							"        F.col(\"V.Admission_Date\"),\n",
-							"        F.col(\"V.Discharge_Date\"),\n",
-							"        F.col(\"V.ICU_Stay\"),\n",
-							"        F.col(\"V.Total_Cost\"))\n",
-							"\n",
-							"patientVisitDoctorJNRDF=patientVisitJNRDF.join(doctorDF,patientVisitJNRDF.Doctor_ID==doctorDF.Doctor_ID,\"inner\")\n",
-							"\n",
-							"patientVisitDoctorTreatmentJNRDF=patientVisitDoctorJNRDF.join(treatmentDF,patientVisitDoctorJNRDF.Treatment_ID==treatmentDF.Treatment_ID,\"inner\")"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"patientTreatmentHistoryDF=patientVisitDoctorTreatmentJNRDF.select(F.col(\"Patient_ID\"),\n",
-							"    F.col(\"Patient_Name\"),\n",
-							"    F.col(\"Doctor_ID\"),\n",
-							"    F.col(\"Name\").alias(\"Doctor_Name\"),\n",
-							"    F.col(\"Specialization\"),\n",
-							"    F.col(\"Treatment_ID\"),\n",
-							"    F.col(\"Treatment_Type\"),\n",
-							"    F.col(\"V.Admission_Date\"),\n",
-							"    F.col(\"V.Discharge_Date\"),\n",
-							"    F.col(\"V.ICU_Stay\"),\n",
-							"    F.col(\"V.Total_Cost\"))"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"delta_table_path = \"abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/patientTreatmentHistory/table/\"\n",
-							"\n",
-							"try:\n",
-							"    # Try to access the Delta table\n",
-							"    patientTreatmentHistoryEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
-							"\n",
-							"    # If the table exists, perform the merge operation\n",
-							"    patientTreatmentHistoryEnterpriseDF.alias(\"target\").merge(\n",
-							"        patientTreatmentHistoryDF.alias(\"source\"),\n",
-							"        \"target.patient_id = source.patient_id\",\n",
-							"        \"target.Admission_Date = source.Admission_Date\",\n",
-							"        \"target.Discharge_Date = source.Discharge_Date\"\n",
-							"    ).whenMatchedUpdateAll(\n",
-							"    ).whenNotMatchedInsertAll(\n",
-							"    ).execute()\n",
-							"\n",
-							"except AnalysisException as e:\n",
-							"\n",
-							"    print(\"Delta table does not exist. Creating a new table...\")\n",
-							"    \n",
-							"    patientTreatmentHistoryDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
-						],
-						"outputs": [],
-						"execution_count": null
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/Load_Enterprise_Doctor_Visits_Summary')]",
-			"type": "Microsoft.Synapse/workspaces/notebooks",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"folder": {
-					"name": "Enterprise_Pipelines"
-				},
-				"nbformat": 4,
-				"nbformat_minor": 2,
-				"sessionProperties": {
-					"driverMemory": "28g",
-					"driverCores": 4,
-					"executorMemory": "28g",
-					"executorCores": 4,
-					"numExecutors": 2,
-					"conf": {
-						"spark.dynamicAllocation.enabled": "false",
-						"spark.dynamicAllocation.minExecutors": "2",
-						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "e46845ad-021b-45f9-bcb6-7d0bd0cc26c6"
-					}
-				},
-				"metadata": {
-					"saveOutput": true,
-					"enableDebugMode": false,
-					"kernelspec": {
-						"name": "synapse_pyspark",
-						"display_name": "python"
-					},
-					"language_info": {
-						"name": "python"
-					},
-					"sessionKeepAliveTimeout": 30
-				},
-				"cells": [
-					{
-						"cell_type": "markdown",
-						"metadata": {
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"<center>This Notebook is used to create Patient_Treatment_History Table in Enterprise Level.</center>\n",
-							"\n",
-							"<table>\n",
-							"<tr><th>Title</th><th>Description</th></tr>\n",
-							"<tr><td>Creator</td><td>Aniket Belsare</td></tr>\n",
-							"<tr><td>Reviewer</td><td>Ankit Negi</td></tr>\n",
-							"<tr><td>DataSets Used</td><td><ul><li>refine_doctor</li>\n",
-							"<li>refine_visit</li>\n",
-							"</ul></td></tr>\n",
-							"</table>"
-						]
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"doctorDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/doctor/table/')"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"doctorVisitJNRDF=doctorDF.alias(\"D\").join(visitsDF.alias(\"V\"),doctorDF.Doctor_ID==visitsDF.Doctor_ID,\"inner\").Select(F.col(\"D.Doctor_ID\"),\n",
-							"        F.col(\"D.Name\").alias(\"Doctor_Name\"),\n",
-							"        F.col(\"V.Visit_ID\"),\n",
-							"        F.col(\"V.Total_Cost\"),\n",
-							"        F.col(\"V.Patient_ID\"),\n",
-							"        F.col(\"V.Discharge_Date\"),\n",
-							"        F.col(\"V.Admission_Date\"))\n",
-							""
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"doctorVisitSummaryDF=doctorVisitJNRDF.groupBy(\"Doctor_ID\", \"Name\") \\\n",
-							"    .agg(\n",
-							"        F.count(\"Visit_ID\").alias(\"Total_Visits_Attended\"),  \n",
-							"        F.sum(\"Total_Cost\").alias(\"Total_Revenue_Generated\"),  \n",
-							"        F.countDistinct(\"Patient_ID\").alias(\"Unique_Patients\"),  \n",
-							"        F.avg(F.datediff(\"Discharge_Date\", \"Admission_Date\")).alias(\"Avg_Length_of_Stay_Per_Patient\")  \n",
-							"    )"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"delta_table_path = \"abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/doctorVisits/table/\"\n",
-							"\n",
-							"try:\n",
-							"    # Try to access the Delta table\n",
-							"    doctorVisitSummaryEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
-							"\n",
-							"    # If the table exists, perform the merge operation\n",
-							"    doctorVisitSummaryEnterpriseDF.alias(\"target\").merge(\n",
-							"        doctorVisitSummaryDF.alias(\"source\"),\n",
-							"        \"target.Doctor_ID = source.Doctor_ID\",\n",
-							"        \"target.Name = source.Name\"\n",
-							"    ).whenMatchedUpdateAll(\n",
-							"    ).whenNotMatchedInsertAll(\n",
-							"    ).execute()\n",
-							"\n",
-							"except AnalysisException as e:\n",
-							"    print(\"Delta table does not exist. Creating a new table...\")\n",
-							"    doctorVisitSummaryDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
-						],
-						"outputs": [],
-						"execution_count": null
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/Load_Enterprise_Treatment_Cost_Analysis')]",
-			"type": "Microsoft.Synapse/workspaces/notebooks",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"folder": {
-					"name": "Enterprise_Pipelines"
-				},
-				"nbformat": 4,
-				"nbformat_minor": 2,
-				"sessionProperties": {
-					"driverMemory": "28g",
-					"driverCores": 4,
-					"executorMemory": "28g",
-					"executorCores": 4,
-					"numExecutors": 2,
-					"conf": {
-						"spark.dynamicAllocation.enabled": "false",
-						"spark.dynamicAllocation.minExecutors": "2",
-						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "da71f2ec-4a1d-4683-84b3-5ef4f45edb22"
-					}
-				},
-				"metadata": {
-					"saveOutput": true,
-					"enableDebugMode": false,
-					"kernelspec": {
-						"name": "synapse_pyspark",
-						"display_name": "python"
-					},
-					"language_info": {
-						"name": "python"
-					},
-					"sessionKeepAliveTimeout": 30
-				},
-				"cells": [
-					{
-						"cell_type": "markdown",
-						"metadata": {
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"<center>This Notebook is used to create Treatment_Cost_Analysis Table in Enterprise Level.</center>\n",
-							"\n",
-							"<table>\n",
-							"<tr><th>Title</th><th>Description</th></tr>\n",
-							"<tr><td>Creator</td><td>Aniket Belsare</td></tr>\n",
-							"<tr><td>Reviewer</td><td>Ankit Negi</td></tr>\n",
-							"<tr><td>DataSets Used</td><td><ul><li>refine_treatment</li>\n",
-							"<li>refine_visit</li>\n",
-							"</ul></td></tr>\n",
-							"</table>"
-						]
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"treatmentDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/treatments/table/')"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"treatmentCostAnalysisDF=treatmentDF.alias(\"t\") \\\n",
-							"    .join(visitDF.alias(\"v\"), \"Treatment_ID\") \\\n",
-							"    .groupBy(\"t.Treatment_ID\", \"t.Treatment_Type\") \\\n",
-							"    .agg(\n",
-							"        F.count(\"v.Visit_ID\").alias(\"Total_Treatments\"),\n",
-							"        F.sum(\"t.Cost\").alias(\"Total_Cost\"),\n",
-							"        F.avg(\"t.Cost\").alias(\"Avg_Cost_Per_Treatment\")\n",
-							"    ) \\\n",
-							"    .orderBy(F.desc(\"Total_Cost\"))"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"delta_table_path = \"abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/treatmentCostAnalysis/table/\"\n",
-							"\n",
-							"try:\n",
-							"    # Try to access the Delta table\n",
-							"    treatmentCostAnalysisEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
-							"\n",
-							"    # If the table exists, perform the merge operation\n",
-							"    treatmentCostAnalysisEnterpriseDF.alias(\"target\").merge(\n",
-							"        treatmentCostAnalysisDF.alias(\"source\"),\n",
-							"        \"target.Treatment_ID = source.Treatment_ID\",\n",
-							"        \"target.Treatment_Type = source.Treatment_Type\"\n",
-							"    ).whenMatchedUpdateAll(\n",
-							"    ).whenNotMatchedInsertAll(\n",
-							"    ).execute()\n",
-							"\n",
-							"except AnalysisException as e:\n",
-							"    print(\"Delta table does not exist. Creating a new table...\")\n",
-							"    treatmentCostAnalysisDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
-						],
-						"outputs": [],
-						"execution_count": null
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/Load_Enterprise_ICU_Stay_Analysis')]",
-			"type": "Microsoft.Synapse/workspaces/notebooks",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"folder": {
-					"name": "Enterprise_Pipelines"
-				},
-				"nbformat": 4,
-				"nbformat_minor": 2,
-				"sessionProperties": {
-					"driverMemory": "28g",
-					"driverCores": 4,
-					"executorMemory": "28g",
-					"executorCores": 4,
-					"numExecutors": 2,
-					"conf": {
-						"spark.dynamicAllocation.enabled": "false",
-						"spark.dynamicAllocation.minExecutors": "2",
-						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "fd2518a9-a2b3-4bdc-b9b6-71e3c9fdd498"
-					}
-				},
-				"metadata": {
-					"saveOutput": true,
-					"enableDebugMode": false,
-					"kernelspec": {
-						"name": "synapse_pyspark",
-						"display_name": "python"
-					},
-					"language_info": {
-						"name": "python"
-					},
-					"sessionKeepAliveTimeout": 30
-				},
-				"cells": [
-					{
-						"cell_type": "markdown",
-						"metadata": {
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"<center>This Notebook is used to create Treatment_Cost_Analysis Table in Enterprise Level.</center>\n",
-							"\n",
-							"<table>\n",
-							"<tr><th>Title</th><th>Description</th></tr>\n",
-							"<tr><td>Creator</td><td>Aniket Belsare</td></tr>\n",
-							"<tr><td>Reviewer</td><td>Ankit Negi</td></tr>\n",
-							"<tr><td>DataSets Used</td><td><ul><li>refine_treatment</li>\n",
-							"<li>refine_visit</li>\n",
-							"</ul></td></tr>\n",
-							"</table>"
-						]
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"ICU_Stay_AnalysisDF=visitDF \\\n",
-							"    .filter(visitDF.ICU_Stay == 'Yes') \\\n",
-							"    .groupBy(\"Patient_ID\") \\\n",
-							"    .agg(\n",
-							"        F.count(\"Visit_ID\").alias(\"Total_ICU_Visits\"),\n",
-							"        F.sum(\"Total_Cost\").alias(\"Total_Cost_Incurred\"),\n",
-							"        F.avg(F.datediff(\"Discharge_Date\", \"Admission_Date\")).alias(\"Avg_Length_of_ICU_Stay\")\n",
-							"    ) \\\n",
-							"    .orderBy(F.desc(\"Total_Cost_Incurred\"))\n",
-							""
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"delta_table_path = \"abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/ICUStayAnalysis/table/\"\n",
-							"\n",
-							"try:\n",
-							"    # Try to access the Delta table\n",
-							"    ICU_Stay_AnalysisEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
-							"\n",
-							"    # If the table exists, perform the merge operation\n",
-							"    ICU_Stay_AnalysisEnterpriseDF.alias(\"target\").merge(\n",
-							"        ICU_Stay_AnalysisDF.alias(\"source\"),\n",
-							"        \"target.Patient_ID = source.Patient_ID\"\n",
-							"    ).whenMatchedUpdateAll(\n",
-							"    ).whenNotMatchedInsertAll(\n",
-							"    ).execute()\n",
-							"\n",
-							"except AnalysisException as e:\n",
-							"    print(\"Delta table does not exist. Creating a new table...\")\n",
-							"    ICU_Stay_AnalysisDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
-						],
-						"outputs": [],
-						"execution_count": null
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/Load_Enterprise_Patient_Visit_Frequency')]",
-			"type": "Microsoft.Synapse/workspaces/notebooks",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"folder": {
-					"name": "Enterprise_Pipelines"
-				},
-				"nbformat": 4,
-				"nbformat_minor": 2,
-				"sessionProperties": {
-					"driverMemory": "28g",
-					"driverCores": 4,
-					"executorMemory": "28g",
-					"executorCores": 4,
-					"numExecutors": 2,
-					"conf": {
-						"spark.dynamicAllocation.enabled": "false",
-						"spark.dynamicAllocation.minExecutors": "2",
-						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "9c90bd58-5f5f-4b8e-a1f0-a33887e19b7f"
-					}
-				},
-				"metadata": {
-					"saveOutput": true,
-					"enableDebugMode": false,
-					"kernelspec": {
-						"name": "synapse_pyspark",
-						"display_name": "python"
-					},
-					"language_info": {
-						"name": "python"
-					},
-					"sessionKeepAliveTimeout": 30
-				},
-				"cells": [
-					{
-						"cell_type": "markdown",
-						"metadata": {
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"<center>This Notebook is used to create Patient_Visit_Frequency Table in Enterprise Level.</center>\n",
-							"\n",
-							"<table>\n",
-							"<tr><th>Title</th><th>Description</th></tr>\n",
-							"<tr><td>Creator</td><td>Aniket Belsare</td></tr>\n",
-							"<tr><td>Reviewer</td><td>Ankit Negi</td></tr>\n",
-							"<tr><td>DataSets Used</td><td><ul>\n",
-							"<li>refine_visit</li>\n",
-							"</ul></td></tr>\n",
-							"</table>"
-						]
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"patientVisitFrequencyDF=visitDF \\\n",
-							"    .groupBy(\"Patient_ID\") \\\n",
-							"    .agg(\n",
-							"        F.count(\"Visit_ID\").alias(\"Total_Visits\"),\n",
-							"        F.sum(\"Total_Cost\").alias(\"Total_Cost_Incured\"),\n",
-							"        F.avg(\"Total_Cost\").alias(\"Avg_Cost_Per_Visit\")\n",
-							"    ) \\\n",
-							"    .orderBy(F.desc(\"Total_Visits\"))\n",
-							""
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"delta_table_path = \"abfss://output@freefinalstorageaccount.dfs.core.windows.net/enterprise/patientVisitFrequency/table/\"\n",
-							"\n",
-							"try:\n",
-							"    # Try to access the Delta table\n",
-							"    patientVisitFrequencyEnterpriseDF= DeltaTable.forPath(spark, delta_table_path)\n",
-							"\n",
-							"    # If the table exists, perform the merge operation\n",
-							"    patientVisitFrequencyEnterpriseDF.alias(\"target\").merge(\n",
-							"        patientVisitFrequencyDF.alias(\"source\"),\n",
-							"        \"target.Patient_ID = source.Patient_ID\"\n",
-							"    ).whenMatchedUpdateAll(\n",
-							"    ).whenNotMatchedInsertAll(\n",
-							"    ).execute()\n",
-							"\n",
-							"except AnalysisException as e:\n",
-							"    print(\"Delta table does not exist. Creating a new table...\")\n",
-							"    patientVisitFrequencyDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
-						],
-						"outputs": [],
-						"execution_count": null
-					}
-				]
-			},
-			"dependsOn": []
 		}
 	]
 }
