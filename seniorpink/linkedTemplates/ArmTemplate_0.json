@@ -818,7 +818,7 @@
 				"parameters": {
 					"input_folder": {
 						"type": "String",
-						"defaultValue": " hospital"
+						"defaultValue": "hospital"
 					},
 					"input_filename": {
 						"type": "String",
@@ -2376,208 +2376,173 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/FileDependencyTriggerCheckDoctor')]",
+			"name": "[concat(parameters('factoryName'), '/CopyPipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Until1",
-						"type": "Until",
+						"name": "Copy data1",
+						"type": "Copy",
 						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
-							"expression": {
-								"value": "@equals(variables('flag'), 1)",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Get Metadata1",
-									"type": "GetMetadata",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"dataset": {
-											"referenceName": "FileCheckDatasets",
-											"type": "DatasetReference",
-											"parameters": {}
-										},
-										"fieldList": [
-											"exists"
-										],
-										"storeSettings": {
-											"type": "AzureBlobFSReadSettings",
-											"recursive": true,
-											"enablePartitionDiscovery": false
-										},
-										"formatSettings": {
-											"type": "DelimitedTextReadSettings"
-										}
-									}
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
 								},
-								{
-									"name": "If Condition1",
-									"type": "IfCondition",
-									"dependsOn": [
-										{
-											"activity": "Get Metadata1",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"expression": {
-											"value": "@activity('Get Metadata1').output.exists",
-											"type": "Expression"
-										},
-										"ifFalseActivities": [
-											{
-												"name": "Wait1",
-												"type": "Wait",
-												"dependsOn": [],
-												"userProperties": [],
-												"typeProperties": {
-													"waitTimeInSeconds": 120
-												}
-											}
-										],
-										"ifTrueActivities": [
-											{
-												"name": "ExecuteMove_Doctor_To_raw_Pipeline",
-												"type": "ExecutePipeline",
-												"dependsOn": [],
-												"policy": {
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"pipeline": {
-														"referenceName": "Move_Doctor_To_raw_Pipeline",
-														"type": "PipelineReference"
-													},
-													"waitOnCompletion": true,
-													"parameters": {}
-												}
-											},
-											{
-												"name": "Set variable1",
-												"type": "SetVariable",
-												"dependsOn": [
-													{
-														"activity": "ExecuteMove_Doctor_To_raw_Pipeline",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"policy": {
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"variableName": "flag",
-													"value": 1
-												}
-											}
-										]
-									}
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
 								}
-							],
-							"timeout": "0.12:00:00"
-						}
-					},
-					{
-						"name": "SuccessEmail",
-						"type": "WebActivity",
-						"dependsOn": [
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "PreserveHierarchy"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Patient_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Patient_ID",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Age",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Age",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Gender",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Gender",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Contact_Info",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Contact_Info",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Medical_History",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Medical_History",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Active_Flag",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Active_Flag",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
 							{
-								"activity": "Until1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
+								"referenceName": "Input_dataset",
+								"type": "DatasetReference",
+								"parameters": {
+									"input_folder": "hospital",
+									"input_filename": "Dim1_Patient_Large.csv"
+								}
 							}
 						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"url": "https://prod-19.northcentralus.logic.azure.com:443/workflows/f079bfe16aac458ea6761cf97e347edf/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=VrUV0KEjDFElws7IcSNAMjcDhoJNdJyGjykteM9F8bo",
-							"body": {
-								"value": "{\n        \"pipeline_name\": \"@{pipeline().Pipeline}\",\n        \"pipeline_id\": \"@{pipeline().RunId}\",\n        \"error_message\":\"None\"\n}",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "Failure_Email",
-						"type": "WebActivity",
-						"dependsOn": [
+						"outputs": [
 							{
-								"activity": "Until1",
-								"dependencyConditions": [
-									"Failed"
-								]
+								"referenceName": "raw_op_dataset",
+								"type": "DatasetReference",
+								"parameters": {
+									"output_folder": "raw",
+									"output_file": "Dim_Patient.csv"
+								}
 							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"url": "https://prod-19.northcentralus.logic.azure.com:443/workflows/f079bfe16aac458ea6761cf97e347edf/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=VrUV0KEjDFElws7IcSNAMjcDhoJNdJyGjykteM9F8bo",
-							"body": {
-								"value": "{\n        \"pipeline_name\": \"@{pipeline().Pipeline}\",\n        \"pipeline_id\": \"@{pipeline().RunId}\",\n        \"error_message\":\"@{activity('Get Metadata1').output.error_message}\"\n}",
-								"type": "Expression"
-							}
-						}
+						]
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"variables": {
-					"flag": {
-						"type": "Integer",
-						"defaultValue": 0
-					}
-				},
-				"folder": {
-					"name": "TriggerGeneratedByActivities"
-				},
-				"annotations": [],
-				"lastPublishTime": "2024-10-09T11:24:44Z"
+				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/FileCheckDatasets')]",
-				"[concat(variables('factoryId'), '/pipelines/Move_Doctor_To_raw_Pipeline')]"
+				"[concat(variables('factoryId'), '/datasets/Input_dataset')]",
+				"[concat(variables('factoryId'), '/datasets/raw_op_dataset')]"
 			]
 		}
 	]
