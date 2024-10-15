@@ -524,7 +524,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "102d5c3d-d5ad-4037-a014-81268fe04caf"
+						"spark.autotune.trackingId": "05e65961-50e3-45e6-ab0b-17582aaa8229"
 					}
 				},
 				"metadata": {
@@ -549,7 +549,8 @@
 						"sparkVersion": "3.4",
 						"nodeCount": 10,
 						"cores": 4,
-						"memory": 28
+						"memory": 28,
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -610,6 +611,25 @@
 						},
 						"source": [
 							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"from pyspark.sql import functions as F"
 						],
 						"outputs": [],
 						"execution_count": null
@@ -2834,7 +2854,16 @@
 							"secureOutput": false,
 							"secureInput": false
 						},
-						"userProperties": [],
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "input/hospital/Dim1_Patient_Large.csv"
+							},
+							{
+								"name": "Destination",
+								"value": "input/6d4cf566-16d1-4b7c-bece-e78cc1fa942d/"
+							}
+						],
 						"typeProperties": {
 							"source": {
 								"type": "DelimitedTextSource",
