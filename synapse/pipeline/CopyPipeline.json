@@ -13,7 +13,16 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "input/hospital/Dim1_Patient_Large.csv"
+					},
+					{
+						"name": "Destination",
+						"value": "input/6d4cf566-16d1-4b7c-bece-e78cc1fa942d/"
+					}
+				],
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
