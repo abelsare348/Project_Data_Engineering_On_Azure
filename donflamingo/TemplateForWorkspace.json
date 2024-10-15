@@ -475,7 +475,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "d34410e1-cbea-48e0-9c87-73362ff5f53c"
+						"spark.autotune.trackingId": "3a7f68b3-dd99-4dbe-bde0-7f0d5ba1e04c"
 					}
 				},
 				"metadata": {
@@ -545,7 +545,7 @@
 							"doctorDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/doctor/table/')"
 						],
 						"outputs": [],
-						"execution_count": null
+						"execution_count": 3
 					},
 					{
 						"cell_type": "code",
@@ -564,7 +564,26 @@
 							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
 						],
 						"outputs": [],
-						"execution_count": null
+						"execution_count": 4
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"from pyspark.sql import functions as F"
+						],
+						"outputs": [],
+						"execution_count": 6
 					},
 					{
 						"cell_type": "code",
@@ -590,7 +609,7 @@
 							""
 						],
 						"outputs": [],
-						"execution_count": null
+						"execution_count": 7
 					},
 					{
 						"cell_type": "code",
@@ -615,7 +634,7 @@
 							"    )"
 						],
 						"outputs": [],
-						"execution_count": null
+						"execution_count": 8
 					},
 					{
 						"cell_type": "code",
