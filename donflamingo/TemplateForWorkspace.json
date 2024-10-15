@@ -524,7 +524,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "05e65961-50e3-45e6-ab0b-17582aaa8229"
+						"spark.autotune.trackingId": "75d287bb-2315-482a-9305-7d4a95b44590"
 					}
 				},
 				"metadata": {
@@ -591,10 +591,29 @@
 							}
 						},
 						"source": [
+							"%pip install delta-spark"
+						],
+						"outputs": [],
+						"execution_count": 1
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
 							"doctorDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/doctor/table/')"
 						],
 						"outputs": [],
-						"execution_count": null
+						"execution_count": 2
 					},
 					{
 						"cell_type": "code",
@@ -613,7 +632,7 @@
 							"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
 						],
 						"outputs": [],
-						"execution_count": null
+						"execution_count": 3
 					},
 					{
 						"cell_type": "code",
@@ -632,7 +651,7 @@
 							"from pyspark.sql import functions as F"
 						],
 						"outputs": [],
-						"execution_count": null
+						"execution_count": 4
 					},
 					{
 						"cell_type": "code",
@@ -658,7 +677,7 @@
 							""
 						],
 						"outputs": [],
-						"execution_count": null
+						"execution_count": 5
 					},
 					{
 						"cell_type": "code",
@@ -683,7 +702,7 @@
 							"    )"
 						],
 						"outputs": [],
-						"execution_count": null
+						"execution_count": 6
 					},
 					{
 						"cell_type": "code",
@@ -714,12 +733,12 @@
 							"    ).whenNotMatchedInsertAll(\n",
 							"    ).execute()\n",
 							"\n",
-							"except AnalysisException as e:\n",
+							"except Exception as e:\n",
 							"    print(\"Delta table does not exist. Creating a new table...\")\n",
 							"    doctorVisitSummaryDF.write.format(\"delta\").mode(\"overwrite\").save(delta_table_path)"
 						],
 						"outputs": [],
-						"execution_count": null
+						"execution_count": 8
 					}
 				]
 			},
