@@ -20,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "569f022c-05ca-42a3-aaf7-a5b30785eb62"
+				"spark.autotune.trackingId": "806bf3cf-28c2-4ab3-b3d1-dc9feb70c867"
 			}
 		},
 		"metadata": {
@@ -89,7 +89,7 @@
 				"source": [
 					"doctorDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/doctor/table/')"
 				],
-				"execution_count": null
+				"execution_count": 3
 			},
 			{
 				"cell_type": "code",
@@ -107,7 +107,25 @@
 				"source": [
 					"visitsDF=spark.read.format('delta').load('abfss://output@freefinalstorageaccount.dfs.core.windows.net/refine/visits/table/')"
 				],
-				"execution_count": null
+				"execution_count": 4
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"from pyspark.sql import functions as F"
+				],
+				"execution_count": 6
 			},
 			{
 				"cell_type": "code",
@@ -132,7 +150,7 @@
 					"        F.col(\"V.Admission_Date\"))\n",
 					""
 				],
-				"execution_count": null
+				"execution_count": 7
 			},
 			{
 				"cell_type": "code",
@@ -156,7 +174,7 @@
 					"        F.avg(F.datediff(\"Discharge_Date\", \"Admission_Date\")).alias(\"Avg_Length_of_Stay_Per_Patient\")  \n",
 					"    )"
 				],
-				"execution_count": null
+				"execution_count": 8
 			},
 			{
 				"cell_type": "code",
