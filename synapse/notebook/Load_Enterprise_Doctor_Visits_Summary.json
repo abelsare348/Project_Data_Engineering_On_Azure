@@ -6,6 +6,10 @@
 		},
 		"nbformat": 4,
 		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "BigDataDev",
+			"type": "BigDataPoolReference"
+		},
 		"sessionProperties": {
 			"driverMemory": "28g",
 			"driverCores": 4,
@@ -16,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "69de31c6-fdf4-4551-a68a-51a6d6b60b5f"
+				"spark.autotune.trackingId": "569f022c-05ca-42a3-aaf7-a5b30785eb62"
 			}
 		},
 		"metadata": {
@@ -24,10 +28,25 @@
 			"enableDebugMode": false,
 			"kernelspec": {
 				"name": "synapse_pyspark",
-				"display_name": "python"
+				"display_name": "Synapse PySpark"
 			},
 			"language_info": {
 				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/2075028d-e3d3-4030-84e2-bb118eb5f397/resourceGroups/synapse_rg/providers/Microsoft.Synapse/workspaces/donflamingo/bigDataPools/BigDataDev",
+				"name": "BigDataDev",
+				"type": "Spark",
+				"endpoint": "https://donflamingo.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/BigDataDev",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
 			},
 			"sessionKeepAliveTimeout": 30
 		},
@@ -104,7 +123,7 @@
 					}
 				},
 				"source": [
-					"doctorVisitJNRDF=doctorDF.alias(\"D\").join(visitsDF.alias(\"V\"),doctorDF.Doctor_ID==visitsDF.Doctor_ID,\"inner\").Select(F.col(\"D.Doctor_ID\"),\n",
+					"doctorVisitJNRDF=doctorDF.alias(\"D\").join(visitsDF.alias(\"V\"),doctorDF.Doctor_ID==visitsDF.Doctor_ID,\"inner\").select(F.col(\"D.Doctor_ID\"),\n",
 					"        F.col(\"D.Name\").alias(\"Doctor_Name\"),\n",
 					"        F.col(\"V.Visit_ID\"),\n",
 					"        F.col(\"V.Total_Cost\"),\n",
@@ -129,7 +148,7 @@
 					}
 				},
 				"source": [
-					"doctorVisitSummaryDF=doctorVisitJNRDF.groupBy(\"Doctor_ID\", \"Name\") \\\n",
+					"doctorVisitSummaryDF=doctorVisitJNRDF.groupBy(\"Doctor_ID\", \"Doctor_Name\") \\\n",
 					"    .agg(\n",
 					"        F.count(\"Visit_ID\").alias(\"Total_Visits_Attended\"),  \n",
 					"        F.sum(\"Total_Cost\").alias(\"Total_Revenue_Generated\"),  \n",
