@@ -20,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "d287f577-a388-4e60-90f6-f8c50058984b"
+				"spark.autotune.trackingId": "29893e38-7b11-48aa-825a-ace46eba88e4"
 			}
 		},
 		"metadata": {
@@ -123,14 +123,7 @@
 					}
 				},
 				"source": [
-					"doctorVisitJNRDF=doctorDF.alias(\"D\").join(visitsDF.alias(\"V\"),doctorDF.Doctor_ID==visitsDF.Doctor_ID,\"inner\").select(F.col(\"D.Doctor_ID\"),\n",
-					"        F.col(\"D.Name\").alias(\"Doctor_Name\"),\n",
-					"        F.col(\"V.Visit_ID\"),\n",
-					"        F.col(\"V.Total_Cost\"),\n",
-					"        F.col(\"V.Patient_ID\"),\n",
-					"        F.col(\"V.Discharge_Date\"),\n",
-					"        F.col(\"V.Admission_Date\"))\n",
-					""
+					"from pyspark.sql import functions as F"
 				],
 				"execution_count": null
 			},
@@ -148,7 +141,14 @@
 					}
 				},
 				"source": [
-					"from pyspark.sql import functions as F"
+					"doctorVisitJNRDF=doctorDF.alias(\"D\").join(visitsDF.alias(\"V\"),doctorDF.Doctor_ID==visitsDF.Doctor_ID,\"inner\").select(F.col(\"D.Doctor_ID\"),\n",
+					"        F.col(\"D.Name\").alias(\"Doctor_Name\"),\n",
+					"        F.col(\"V.Visit_ID\"),\n",
+					"        F.col(\"V.Total_Cost\"),\n",
+					"        F.col(\"V.Patient_ID\"),\n",
+					"        F.col(\"V.Discharge_Date\"),\n",
+					"        F.col(\"V.Admission_Date\"))\n",
+					""
 				],
 				"execution_count": null
 			},
