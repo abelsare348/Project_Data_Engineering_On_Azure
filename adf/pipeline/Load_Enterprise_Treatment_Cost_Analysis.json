@@ -1,5 +1,5 @@
 {
-	"name": "Load_Enterprise_Doctor_Visits_Summary",
+	"name": "Load_Enterprise_Treatment_Cost_Analysis",
 	"properties": {
 		"activities": [
 			{
@@ -77,7 +77,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/savitabelsare348@gmail.com/Load_Enterprise_DoctorVisit_table"
+					"notebookPath": "/Users/savitabelsare348@gmail.com/Load_Enterprise_Treatment_Cost_Analysis"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks1",
