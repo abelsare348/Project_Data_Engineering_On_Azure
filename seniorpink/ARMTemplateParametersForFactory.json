@@ -8,8 +8,17 @@
 		"AzureDataLakeStorageInputLinkedService_accountKey": {
 			"value": ""
 		},
+		"AzureDatabricks1_accessToken": {
+			"value": ""
+		},
 		"AzureDataLakeStorageInputLinkedService_properties_typeProperties_url": {
 			"value": "https://freefinalstorageaccount.dfs.core.windows.net/"
+		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"value": "1014-065534-z308dges"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://KeyVault348.vault.azure.net/"
 		},
 		"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
 			"value": "https://donflamingo.dev.azuresynapse.net"

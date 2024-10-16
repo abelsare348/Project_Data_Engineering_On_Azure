@@ -11,9 +11,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorageInputLinkedService'"
 		},
+		"AzureDatabricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+		},
 		"AzureDataLakeStorageInputLinkedService_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://freefinalstorageaccount.dfs.core.windows.net/"
+		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1014-065534-z308dges"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://KeyVault348.vault.azure.net/"
 		},
 		"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
 			"type": "string",
@@ -65,23 +77,20 @@
 					"AzureDataLakeStorageInputLinkedService_accountKey": {
 						"value": "[parameters('AzureDataLakeStorageInputLinkedService_accountKey')]"
 					},
+					"AzureDatabricks1_accessToken": {
+						"value": "[parameters('AzureDatabricks1_accessToken')]"
+					},
 					"AzureDataLakeStorageInputLinkedService_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorageInputLinkedService_properties_typeProperties_url')]"
 					},
+					"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks1_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
 					"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
 						"value": "[parameters('AzureSynapseArtifacts1_properties_typeProperties_endpoint')]"
-					},
-					"RefineDoctorTrigger_properties_typeProperties_scope": {
-						"value": "[parameters('RefineDoctorTrigger_properties_typeProperties_scope')]"
-					},
-					"RefinePatientTrigger_properties_typeProperties_scope": {
-						"value": "[parameters('RefinePatientTrigger_properties_typeProperties_scope')]"
-					},
-					"RefineTreatmentTrigger_properties_typeProperties_scope": {
-						"value": "[parameters('RefineTreatmentTrigger_properties_typeProperties_scope')]"
-					},
-					"RefineVisitTrigger_properties_typeProperties_scope": {
-						"value": "[parameters('RefineVisitTrigger_properties_typeProperties_scope')]"
 					}
 				}
 			},
@@ -100,6 +109,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"RefineDoctorTrigger_properties_typeProperties_scope": {
+						"value": "[parameters('RefineDoctorTrigger_properties_typeProperties_scope')]"
+					},
+					"RefinePatientTrigger_properties_typeProperties_scope": {
+						"value": "[parameters('RefinePatientTrigger_properties_typeProperties_scope')]"
+					},
+					"RefineTreatmentTrigger_properties_typeProperties_scope": {
+						"value": "[parameters('RefineTreatmentTrigger_properties_typeProperties_scope')]"
+					},
+					"RefineVisitTrigger_properties_typeProperties_scope": {
+						"value": "[parameters('RefineVisitTrigger_properties_typeProperties_scope')]"
 					}
 				}
 			},
