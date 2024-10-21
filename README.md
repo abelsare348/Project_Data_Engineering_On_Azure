@@ -6,7 +6,7 @@ This project demonstrates a complete **data engineering pipeline** for a healthc
 
 ## Architecture Diagram
 
-![Architecture Diagram](/ArchitectureDiagram/FinalprojectEngineeringOnAzure.drawio.png)
+![Architecture Diagram](ArchitecturalDiagram/FinalprojectEngineeringOnAzure.drawio.png)
 
 ## Technologies Used
 
