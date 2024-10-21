@@ -1,0 +1,5 @@
+Device_ID,Patient_ID,Timestamp,Heart_Rate,Oxygen_Level,Ventilator_Status
+301,1,2024-01-10 10:00,72,95,Off
+302,1,2024-01-10 14:00,78,96,Off
+303,3,2024-01-22 09:00,85,94,On
+304,3,2024-01-22 16:00,90,93,On

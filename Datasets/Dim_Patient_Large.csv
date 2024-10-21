@@ -1,0 +1,1001 @@
+Patient_ID,Name,Age,Gender,Contact_Info,Medical_History,Active_Flag
+1,Rose Mills,63,Male,+1-937-245-3355x08682,Hypertension,No
+2,Louis Carter,76,Male,+1-695-771-2780x81199,None,No
+3,Vanessa Jones,80,Female,137-709-2216x42327,Hypertension,Yes
+4,Shannon Mejia,23,Female,+1-664-892-1485x0275,Hypertension,Yes
+5,Susan Stevenson,63,Male,3853103937,Diabetes,No
+6,Timothy Thomas,24,Female,763.966.3664,Hypertension,No
+7,Cindy Gonzales,62,Female,001-644-249-9191,None,No
+8,Lisa Reed,43,Male,919.256.2553,Hypertension,No
+9,Wendy Moore,38,Male,(551)268-6213x84946,None,No
+10,Arthur Barnes,28,Female,(843)798-4243,Heart Disease,Yes
+11,Vickie Smith,61,Male,001-944-246-7939,Diabetes,No
+12,Kyle Brown,42,Female,+1-780-769-0112x47545,None,Yes
+13,Rebecca English,41,Female,+1-643-430-6598x07513,Hypertension,No
+14,Manuel Cox,75,Male,891-875-6679x5039,Diabetes,Yes
+15,Sarah Parrish,26,Female,+1-025-977-8063,Hypertension,No
+16,Michael James,28,Female,+1-382-924-8406x54393,Diabetes,No
+17,Daniel Houston,47,Male,(287)025-6970x890,Heart Disease,No
+18,Veronica Miller,62,Male,322-655-5887x677,None,Yes
+19,Christina Guzman,69,Male,5844399090,Hypertension,Yes
+20,Jill Conway,28,Male,+1-316-642-9498x25101,Hypertension,Yes
+21,Kyle Bowen,50,Male,4308182697,Diabetes,Yes
+22,Emily Johnson,51,Male,846-769-2696,Diabetes,No
+23,Miranda Hamilton,80,Female,(958)811-0908,Heart Disease,Yes
+24,Samuel Davis,34,Female,001-755-624-7407x43112,Hypertension,No
+25,Nicholas Beltran,66,Male,+1-090-681-5275x174,Hypertension,Yes
+26,Steven Montes,46,Male,(867)908-2473x71093,Heart Disease,No
+27,Robert White,50,Female,+1-470-332-4152,Hypertension,No
+28,James Ramirez,59,Male,874-912-6273x6679,Hypertension,Yes
+29,Mrs. Yvonne Rosales DDS,46,Male,+1-108-946-5416,Hypertension,Yes
+30,Terri Walker,52,Male,990.137.5103,Diabetes,Yes
+31,Daniel Olson,40,Male,4081146351,Heart Disease,Yes
+32,Michael Taylor,46,Female,9051521419,Heart Disease,No
+33,Jeremy Williams,43,Female,842-394-4259,None,Yes
+34,Jason Smith,45,Female,148-150-7457x92872,Diabetes,No
+35,Kyle Rollins,57,Male,636.866.9842x49219,Diabetes,No
+36,Alex Kramer,67,Male,475-859-8363x629,Hypertension,No
+37,Paula Smith,41,Female,703-303-8632,Hypertension,Yes
+38,Wayne Powell,55,Female,001-083-157-5404x2884,Heart Disease,Yes
+39,Jeffery Snyder,75,Male,(916)450-5611x70562,Heart Disease,Yes
+40,Daniel Yang,44,Male,904.897.8497x883,Diabetes,No
+41,Laura Cruz,41,Female,623-361-3399x218,Heart Disease,Yes
+42,Jon Day,48,Female,+1-408-753-4974x0356,Heart Disease,No
+43,Nathan Deleon,53,Female,001-493-756-6918x65958,Diabetes,No
+44,Jeffrey Hawkins,68,Female,223.249.1515,Heart Disease,Yes
+45,Mark Moreno,46,Male,005-096-2647x781,None,Yes
+46,Joseph Gonzales,24,Male,958-009-9317x2386,Diabetes,No
+47,Adam Hill,74,Female,(173)484-4969x4503,Hypertension,Yes
+48,Lee Wood,71,Female,898.069.1955x480,Diabetes,Yes
+49,Dr. Corey Boyd PhD,27,Male,+1-643-516-2550,None,Yes
+50,Cassandra Gomez,50,Male,(031)518-2517x8802,Heart Disease,Yes
+51,Bonnie Adams,77,Male,(120)541-0723x944,Heart Disease,No
+52,Jennifer Hicks,50,Female,(451)016-7420x1943,Hypertension,Yes
+53,Gary Jones,34,Female,001-611-782-6318x628,Heart Disease,Yes
+54,Brad Dean,42,Female,001-413-591-5520x4445,Hypertension,No
+55,Alexandra Bryant,36,Male,128-144-4438,Hypertension,No
+56,Scott Terry,31,Male,792.747.5091x06639,Diabetes,No
+57,Michelle Boyd,58,Male,001-401-181-5268x720,None,No
+58,Thomas Howell,25,Male,4708727228,Heart Disease,Yes
+59,Angela Rodgers,23,Male,+1-609-307-1278x494,None,No
+60,Craig Stewart,26,Female,(799)335-3244x4648,Heart Disease,No
+61,Michelle Daniels,74,Female,001-992-852-6147x561,Hypertension,Yes
+62,Stephanie Mejia,21,Female,+1-241-121-7357x86740,Diabetes,Yes
+63,Michael Watson,39,Female,(374)810-1035x178,Diabetes,Yes
+64,Allison Ali,57,Female,370-918-3921x3819,Hypertension,No
+65,Kristina Chavez,39,Male,001-130-629-6825,Hypertension,Yes
+66,Jennifer Santos,25,Female,6556961672,Heart Disease,Yes
+67,Erin Norman,76,Male,(908)298-1291x4216,Hypertension,Yes
+68,Lance Boyd,66,Male,985-477-1020x1403,None,No
+69,Michael Johnson,54,Female,+1-086-651-1629x7225,Diabetes,Yes
+70,Raymond Gomez,55,Male,+1-992-554-3116x011,Hypertension,Yes
+71,David Castillo,61,Male,+1-421-557-5376,Hypertension,No
+72,Joe Morris,65,Female,916-607-1195x18685,Diabetes,No
+73,Cheryl King,40,Female,+1-140-349-1356,Hypertension,No
+74,Erin Ramirez,38,Male,(790)021-1524x553,Diabetes,No
+75,Melanie Aguilar,70,Male,(893)690-0434,Diabetes,No
+76,Kristin Hernandez,56,Male,805-483-5499x8728,Diabetes,Yes
+77,Brittany Young,42,Male,+1-374-157-7822x8115,Diabetes,No
+78,Christian Kent,68,Female,(455)524-4811x77890,Heart Disease,No
+79,Nicholas Strickland,32,Female,+1-202-623-9165x4497,Hypertension,Yes
+80,Dennis Reese,46,Male,(311)317-2684x130,Hypertension,Yes
+81,Jason Garrett,31,Male,954.133.3151x35798,None,Yes
+82,Randy Martin,50,Female,(913)314-2187x1366,Diabetes,Yes
+83,Christine Jensen,36,Female,001-799-879-5513x392,Heart Disease,Yes
+84,Emily Love,72,Female,6378163135,Diabetes,No
+85,Michael Padilla,43,Female,485-268-8280x54721,Heart Disease,Yes
+86,Ian Davis,66,Male,(255)610-0995,Hypertension,Yes
+87,Karen Coleman,79,Female,001-015-954-2570,Hypertension,No
+88,Denise Anderson,60,Female,(283)726-2670,Diabetes,No
+89,Molly Miller,33,Female,177.822.4503x0245,None,No
+90,Carrie Soto,58,Female,001-745-251-5097x74553,Diabetes,No
+91,Bryan Dominguez,30,Male,(174)530-7664x7413,Hypertension,Yes
+92,Pamela Torres,51,Male,(707)775-6579x967,None,No
+93,Rodney Wilkerson,71,Female,785.190.1959,Hypertension,No
+94,Karen Cole,71,Female,(304)449-1179x11424,None,Yes
+95,Jared Santos,21,Female,001-553-622-6942x6355,None,No
+96,Amanda Luna,27,Male,405.381.6608x7280,Hypertension,No
+97,Robert Peterson,35,Female,001-022-717-0629x15407,None,Yes
+98,Robert Jones,45,Female,816.107.7192x38367,Diabetes,Yes
+99,Katherine Conrad,80,Male,965-173-8594,Hypertension,Yes
+100,Jonathan Pittman,57,Female,(989)283-6677,None,Yes
+101,Nicole Peters,64,Male,(072)739-6054x59407,Heart Disease,No
+102,Joy Davis,63,Male,001-658-965-9444x582,None,Yes
+103,Julie Jackson,60,Female,830.528.6670,None,Yes
+104,Monica Hill,71,Female,+1-466-869-4772x4766,Diabetes,Yes
+105,Corey Sandoval,46,Male,(535)971-0014x34828,Diabetes,No
+106,Bethany Campbell,22,Male,7373243891,Diabetes,Yes
+107,Nathaniel Patel,62,Female,(392)724-2493,Diabetes,No
+108,Chris Brown,37,Female,258-422-7101x3028,Heart Disease,No
+109,Jorge Leach,24,Male,2658852464,Diabetes,No
+110,Trevor Sanchez,33,Female,+1-731-587-4956,None,Yes
+111,Leah Price,60,Female,8441458430,None,No
+112,Edward Leblanc,52,Female,788.576.5119x826,Hypertension,Yes
+113,Justin Torres,38,Male,748.937.4762,Hypertension,Yes
+114,Christopher Meyer,67,Male,001-011-409-4887x673,None,No
+115,Victoria Mason,45,Female,+1-397-831-2540x585,Hypertension,Yes
+116,Catherine Jordan,70,Female,+1-843-287-9969,Hypertension,No
+117,Jennifer Gonzales,80,Male,(562)377-8045x845,Diabetes,Yes
+118,Edwin Carlson,58,Male,7284369262,Heart Disease,Yes
+119,Jonathan Sanchez,77,Female,001-226-703-2810x45463,None,No
+120,Cheryl Clayton,70,Male,514.930.1226x8362,Hypertension,No
+121,David Morrison,30,Female,727.958.0391x8378,None,Yes
+122,Brian Skinner,74,Male,956-664-9988x5850,None,No
+123,Chelsey Webster MD,30,Female,001-327-817-8092,None,No
+124,Ian Mayer,48,Female,700.031.6140x250,Hypertension,No
+125,Bernard Arnold,29,Female,(789)616-2133x9952,Heart Disease,No
+126,Kayla Morrison,49,Female,444.125.5510x66669,Heart Disease,Yes
+127,Michael Rios,47,Male,109-042-0299x4942,Heart Disease,Yes
+128,Elizabeth Bautista,68,Male,(501)355-0056,Diabetes,Yes
+129,Megan Bernard,25,Female,0790721411,Hypertension,No
+130,Elizabeth Andrews,79,Female,813-643-8528x338,Hypertension,Yes
+131,Brian White,65,Male,+1-950-597-1206x680,None,No
+132,Jacob Maynard,47,Female,(851)375-2035,None,Yes
+133,Aaron Conley,46,Female,001-425-745-3861,Diabetes,No
+134,Ashley Martinez,76,Female,(879)035-1016x18817,Heart Disease,No
+135,Matthew Skinner,62,Female,308-009-8051,Hypertension,Yes
+136,William White,64,Female,(708)583-2889x10354,Diabetes,Yes
+137,Preston Brown,41,Male,(028)241-9606x539,Heart Disease,No
+138,Mark Tran,60,Female,(200)683-8852x583,Diabetes,No
+139,Alex Jones,25,Female,001-471-050-3014x285,Hypertension,Yes
+140,Alison Stephens,66,Female,+1-319-248-4216x4060,None,No
+141,Michael Ellis Jr.,49,Male,822.293.8601,Diabetes,No
+142,Olivia Miranda,37,Female,204-498-8734,Heart Disease,Yes
+143,Allison Walters,41,Female,9481837923,Diabetes,Yes
+144,Trevor Ellis,41,Male,(065)732-3264x99942,Diabetes,Yes
+145,Donald Bird,62,Male,001-499-432-8358x68154,Hypertension,Yes
+146,Sarah Trujillo,69,Male,+1-653-984-3442x177,Hypertension,No
+147,Kiara Rivera,47,Male,232.570.5560x69590,None,No
+148,Anna Crosby,48,Male,001-695-481-4270x1329,Hypertension,No
+149,Sean Martinez,29,Female,1288072390,None,No
+150,Justin Jones,34,Female,442-662-1305,Hypertension,No
+151,Barbara Branch,63,Female,+1-230-350-0529x6122,Heart Disease,Yes
+152,James Lam,70,Female,110.824.6108x6613,Diabetes,No
+153,Thomas Sanchez,31,Male,001-423-530-7229x6256,None,Yes
+154,Eddie Miller,55,Female,001-318-348-9662,Heart Disease,Yes
+155,Laura Lopez,64,Female,391.884.7635x8982,Diabetes,No
+156,Kristopher Costa,34,Female,(054)214-0719,Hypertension,Yes
+157,Catherine Gonzalez,59,Female,001-488-411-5355x1951,Heart Disease,Yes
+158,Charles Moon,48,Female,(372)580-2492,Hypertension,No
+159,Natalie Smith,39,Female,6921356134,Hypertension,Yes
+160,Jeff Welch,31,Female,+1-885-998-5935x81012,None,Yes
+161,Alan Phelps,64,Female,(160)655-1230x347,Heart Disease,Yes
+162,Rhonda Johnson,59,Male,(354)891-7132,Hypertension,Yes
+163,Larry Murphy,53,Male,+1-649-335-4418x41307,None,Yes
+164,Jennifer Lopez,78,Male,001-175-511-0109x56671,Diabetes,No
+165,Kevin Duran,80,Female,(619)019-8818,Diabetes,Yes
+166,Michael Zimmerman,32,Female,734-000-1639,Hypertension,No
+167,Steven Smith,48,Male,003-581-8820,Diabetes,Yes
+168,Thomas Pratt,25,Male,5637687842,Diabetes,Yes
+169,Travis Hernandez,69,Female,5039502411,Diabetes,Yes
+170,Elizabeth Foster,63,Female,026-212-9472,None,No
+171,Shawn Bryant,47,Female,050.456.5423,Diabetes,No
+172,Jennifer Pineda,50,Male,001-886-785-1173,None,No
+173,Wanda Jenkins,66,Female,001-379-566-7849x4100,None,No
+174,Janet Gardner,70,Female,036.712.9270x1081,Heart Disease,Yes
+175,Jason Vang,34,Male,001-260-811-4560x07887,Hypertension,No
+176,Joan Christian,53,Female,717-264-4637x51299,Heart Disease,No
+177,Regina Horton,38,Male,(438)567-8951x06180,None,Yes
+178,David Howard,29,Female,001-032-866-5108x81095,Diabetes,No
+179,Crystal Miller,68,Female,+1-636-469-5768x0263,None,No
+180,Valerie Elliott,55,Female,(878)363-0227x9284,None,Yes
+181,Joseph Little,79,Male,+1-624-763-9422x43575,None,No
+182,George Gomez,69,Female,+1-376-586-1748x14606,None,Yes
+183,Dana Bryant,60,Male,165.624.4549x6060,None,No
+184,Savannah Lawrence,31,Male,913.063.1238,None,No
+185,Joshua Smith,34,Female,001-847-207-3044,Hypertension,No
+186,Carlos Silva,47,Female,(578)823-4107x81996,Diabetes,No
+187,Linda Roman,62,Male,+1-098-844-1591x891,Hypertension,Yes
+188,Kimberly Rosales,26,Female,441-238-0486x4569,Diabetes,Yes
+189,Holly Jimenez,68,Male,459-458-4487x410,None,Yes
+190,Matthew Thomas,34,Male,+1-417-738-3404x32535,Heart Disease,No
+191,Cynthia Smith,51,Female,462.773.3634x192,Hypertension,Yes
+192,Melanie Brown,34,Male,001-239-788-5404,None,Yes
+193,Ms. Shelly Barber,20,Female,001-504-656-5700x008,Diabetes,Yes
+194,Edward Gross,37,Male,874.763.1995,Diabetes,No
+195,Michael Morrison,49,Female,893-887-4574x4031,Diabetes,No
+196,Levi Salazar,72,Male,001-053-758-5322x2490,None,Yes
+197,Emily Robinson,24,Female,(396)145-8813x02413,Hypertension,Yes
+198,Ethan Martinez,69,Female,(319)798-3259x408,Hypertension,Yes
+199,Amy Trujillo,24,Male,356-791-9228x75551,Diabetes,No
+200,Yolanda Lyons,63,Male,430.611.1450x8569,Hypertension,Yes
+201,Chad Jones,25,Female,6521470248,Diabetes,No
+202,Tiffany Campbell,75,Female,001-681-290-9895x470,Hypertension,Yes
+203,Haley Johnson,29,Female,001-619-330-4248x4862,Heart Disease,No
+204,Eric Sellers,56,Female,+1-478-503-0199x7529,Heart Disease,No
+205,Tony Spencer,54,Female,(064)024-9577x59566,Heart Disease,Yes
+206,Catherine Smith,42,Female,(589)243-7484,Heart Disease,Yes
+207,Anna Brown,57,Male,+1-237-198-6586x65556,Hypertension,No
+208,Tiffany Parker,70,Male,(926)354-3613x39200,None,No
+209,Ann Velasquez,66,Female,(225)815-9382x900,Heart Disease,No
+210,Terry Murray,31,Male,349-827-4371,Heart Disease,No
+211,Carrie Myers,62,Female,+1-942-406-6402x80443,None,Yes
+212,Michael Tate,34,Male,+1-895-070-5861x6305,Diabetes,Yes
+213,Mariah Brown,77,Female,(392)603-6205x356,Heart Disease,Yes
+214,Patricia Moore,38,Male,(336)206-9526,Heart Disease,No
+215,Lance Washington,79,Male,+1-656-058-1837x4299,Diabetes,Yes
+216,Ann Simmons,80,Male,045-722-7172,Heart Disease,Yes
+217,Eric Palmer,37,Male,+1-492-708-6111x011,Diabetes,No
+218,Patricia Fitzgerald,27,Male,+1-240-709-9132x9162,None,Yes
+219,Jennifer Hendrix,46,Male,067.635.2290x00615,Hypertension,No
+220,William Griffith II,56,Female,910.495.7840,None,No
+221,Douglas Contreras,25,Female,572-367-8622x49033,None,No
+222,Veronica Chen,42,Male,001-580-745-5047x5513,Diabetes,Yes
+223,Thomas Martin,62,Female,(929)355-4250,Hypertension,Yes
+224,Doris Haynes,72,Male,(753)501-3846x719,Hypertension,No
+225,Emily Mcdowell,40,Male,001-757-040-9684x99328,Heart Disease,No
+226,Gina Young,21,Female,(648)491-8191,Heart Disease,Yes
+227,Heidi Williams,63,Male,205-351-4084x611,None,No
+228,Matthew Davis,71,Female,053.069.9245,None,Yes
+229,Kimberly Scott,60,Male,+1-222-340-1139x587,None,Yes
+230,Taylor Chavez,70,Female,(753)279-9631x480,Heart Disease,Yes
+231,Jamie Meyers,22,Male,186-587-4537x978,Diabetes,No
+232,Tracy Caldwell,35,Male,001-227-328-1577x86299,None,No
+233,Thomas Lucero,27,Male,001-393-025-1214,Hypertension,Yes
+234,Angela Richards,76,Female,(497)710-6047,None,No
+235,Jeffrey Walker,73,Male,001-571-144-3715x962,Heart Disease,Yes
+236,Tony Booth,33,Male,335-582-8201x6343,None,No
+237,Christopher Moore,46,Female,824-043-9926x5670,Heart Disease,No
+238,Michael Caldwell,80,Male,772.952.5287,Heart Disease,No
+239,Jessica Phillips,80,Female,9823279762,Heart Disease,No
+240,Brian Lopez,56,Female,(875)401-3969,Diabetes,No
+241,Mark Stanley,62,Female,069.861.8040x138,Hypertension,Yes
+242,Emily White,63,Male,873-271-5102x2943,Diabetes,No
+243,Jodi Calderon,68,Male,712-777-3193,None,Yes
+244,Daniel Macdonald,29,Female,468.059.0002x6563,Diabetes,No
+245,Melanie Petersen,32,Male,+1-780-201-5147x95699,None,Yes
+246,Amanda Schultz,52,Male,452.927.4753x255,None,No
+247,Keith Johnson,28,Female,524-312-3141,Hypertension,No
+248,Jennifer Williams,76,Female,148.750.5741x07515,Heart Disease,No
+249,Christopher Moreno,74,Female,001-363-221-7841x6400,Diabetes,No
+250,Sandra Reed,37,Male,(367)447-9684,None,Yes
+251,Brittany Hodges,23,Male,(483)933-3928x7368,Heart Disease,No
+252,Jennifer Rodriguez,20,Male,906.465.4738x336,Diabetes,Yes
+253,Jamie Barrett,71,Female,154-440-6807x25440,None,Yes
+254,Morgan Martinez,55,Female,700.581.9672x0809,Diabetes,Yes
+255,Lindsay Hernandez,70,Male,(733)722-8067,Hypertension,No
+256,Angela Henry,71,Female,1953939130,None,No
+257,Amanda Gutierrez,24,Female,122-570-1323x32663,Diabetes,Yes
+258,Gail Mccoy,27,Female,3536165341,Hypertension,Yes
+259,Kaitlin Foster,79,Male,+1-795-150-2348,Diabetes,Yes
+260,Carol Sanchez,63,Male,+1-557-516-7378x63668,Diabetes,No
+261,John Sanders,76,Male,(671)022-7219x99662,Heart Disease,Yes
+262,Michelle Benson,51,Female,(226)676-4859x422,None,No
+263,Diane Cook,32,Male,312-173-7272x63584,Diabetes,No
+264,Joseph Fowler,55,Female,414.681.2487,Hypertension,Yes
+265,Hunter Leonard,30,Female,+1-670-785-2511x35193,Hypertension,No
+266,Christina Ballard,33,Female,(548)263-6986x3132,Hypertension,Yes
+267,Jessica Mullins,54,Male,6701651193,Heart Disease,No
+268,James Dunn,73,Male,+1-962-717-9527x54598,None,Yes
+269,Alicia Mendez,42,Male,939-751-0672x03053,Hypertension,Yes
+270,Brandon Anthony,47,Male,001-417-134-3090,Hypertension,Yes
+271,David Burns,49,Male,(302)302-3989x8935,None,No
+272,Michelle Norris,60,Male,+1-105-479-4154,Diabetes,No
+273,Samantha Johnson,65,Male,226.771.4304,Hypertension,Yes
+274,Lisa Smith,39,Male,+1-042-916-5288x51298,Heart Disease,No
+275,Mark Stokes,31,Female,888-193-0103,None,Yes
+276,Ashley Johnson,39,Female,538-319-9382,None,No
+277,Melissa Frazier,52,Female,729-911-4036x874,Hypertension,No
+278,Sean Nelson,63,Male,+1-606-275-2888x706,None,Yes
+279,Brian Roberts,78,Male,477-208-4821,None,No
+280,Sharon Harris,33,Male,008-617-1941,Heart Disease,No
+281,Johnny Green,37,Female,(183)188-2479,Diabetes,Yes
+282,Alex Dixon,23,Female,(134)384-8907x77267,Hypertension,Yes
+283,Ashley Conner,41,Female,+1-418-473-2666,Heart Disease,Yes
+284,Ashley Soto,20,Male,940-390-9923x84724,Hypertension,Yes
+285,James Smith,29,Male,846-058-3742x1823,Diabetes,Yes
+286,Laura Davis,50,Male,244-073-2147,None,Yes
+287,Suzanne Mason,56,Male,+1-337-643-3587x54537,Hypertension,No
+288,Steven Garza,42,Female,892-190-3235x363,None,Yes
+289,Susan Nguyen,29,Female,001-262-837-3841x70927,None,No
+290,Sandra Davis,42,Male,5537136111,Diabetes,Yes
+291,Jerry Buck,71,Female,+1-096-907-7683x294,None,No
+292,Anthony Dawson,70,Female,177-784-7170x8219,Diabetes,Yes
+293,Paul Rose,75,Female,(356)344-3100x991,Heart Disease,Yes
+294,Victoria Rodriguez,28,Female,+1-652-519-8114x72931,None,No
+295,Bryan Wilson,25,Female,(845)436-7305,Diabetes,Yes
+296,Miss Amber Thompson,72,Female,560.252.3841,Diabetes,No
+297,Sandra Cardenas,33,Male,+1-743-176-3148x708,Diabetes,No
+298,Kathy Haynes,40,Male,720.064.7427,None,No
+299,Shawn Frost,56,Male,001-431-722-4031x46160,Heart Disease,Yes
+300,Jacqueline Gonzalez,45,Female,004-021-1759x5007,Heart Disease,Yes
+301,Derrick Mosley,52,Female,213-722-6144x0035,Hypertension,Yes
+302,Megan Miller,24,Female,9635645946,Diabetes,Yes
+303,Tanner Clayton,46,Male,0770503107,None,Yes
+304,Shane Wood,65,Female,304.499.0350x392,Heart Disease,No
+305,Denise Carter,44,Female,001-874-062-9605x2784,None,No
+306,Jeffrey Hall,42,Male,6824645161,None,Yes
+307,Gordon Galloway,43,Female,+1-249-867-3637x81889,Diabetes,No
+308,Duane Bolton,59,Female,001-678-500-3733x747,Diabetes,Yes
+309,Stephanie Vincent,40,Male,062-094-4710x832,None,No
+310,Roy Juarez,78,Male,+1-610-571-5747x524,None,Yes
+311,Mrs. Sarah Harvey PhD,48,Female,001-371-196-2007,Hypertension,No
+312,Steve Rios,50,Male,(399)009-2307,Hypertension,No
+313,Christopher Wood,42,Male,(700)726-2681x90526,Heart Disease,Yes
+314,Shawn Lowery,38,Female,(746)740-5712,None,Yes
+315,Mary Carter,52,Male,334-990-4548x453,Diabetes,Yes
+316,Dennis Miller,77,Female,001-316-976-2525x3861,Heart Disease,Yes
+317,Cindy Smith,66,Male,001-705-860-9188x39302,None,Yes
+318,Kara Carr,76,Male,105.816.6101x347,Diabetes,No
+319,Jacqueline Smith,48,Female,+1-942-954-8404,Diabetes,Yes
+320,Alexis Young,68,Male,913.405.4688x07693,Diabetes,Yes
+321,Nicholas Crosby,31,Female,088.573.6853,Diabetes,Yes
+322,David Anderson,68,Female,001-167-845-1250x2664,Hypertension,Yes
+323,Michelle Myers,28,Male,199.894.8513x4310,Hypertension,Yes
+324,Peter Scott,49,Female,0164218797,Diabetes,No
+325,Monica Wilkins,67,Female,+1-599-028-8377x583,Diabetes,Yes
+326,Brian Blake,53,Male,277-102-8242x5008,Hypertension,No
+327,Samuel Sosa,70,Male,001-740-999-7651x937,Hypertension,No
+328,Jennifer Bennett,68,Male,+1-742-112-4806x7520,Hypertension,Yes
+329,Joseph Martinez,50,Female,001-239-524-6130x820,Heart Disease,No
+330,Scott Green,35,Female,882-196-9719x022,Diabetes,No
+331,Francisco Garrett,56,Male,+1-308-527-1814x24043,Heart Disease,No
+332,Eric Nichols,52,Male,(687)778-7267x093,Hypertension,Yes
+333,Todd Green,25,Female,394-356-8113,Diabetes,No
+334,Tracy Miles,48,Male,028.189.3416x834,None,No
+335,Joshua Bell,73,Female,+1-418-328-1071x5974,Heart Disease,Yes
+336,Kendra Carlson,27,Female,408-352-4499,Heart Disease,No
+337,Thomas Nielsen,60,Male,(155)673-5713,Heart Disease,No
+338,Julie Melendez,35,Female,+1-948-218-0882x933,Hypertension,Yes
+339,Elizabeth Haney,29,Male,(519)422-1202,None,Yes
+340,Betty Powell,63,Male,661.457.2008x22094,Hypertension,Yes
+341,Jeffery Brooks,41,Female,542-919-5555,Heart Disease,Yes
+342,Tammy Williams,78,Male,+1-684-693-1055x7734,Diabetes,No
+343,Rachel Smith,70,Female,350-408-2236x867,None,Yes
+344,Cheryl Morgan,61,Male,231.744.5126x874,None,No
+345,Bonnie Harris,41,Female,784-997-4135,Diabetes,No
+346,Katrina Adams,22,Female,+1-671-299-6360x253,Heart Disease,No
+347,Keith Reynolds,53,Female,7678351243,Heart Disease,No
+348,Joseph Jones,21,Female,926.213.6719,Heart Disease,Yes
+349,Timothy Martin,26,Male,+1-321-793-6253x420,Heart Disease,Yes
+350,Justin Weaver,70,Male,001-117-218-1956,None,No
+351,Penny Dalton,28,Female,(797)005-6598,Hypertension,Yes
+352,Joseph Phelps,66,Female,(695)868-0510,Hypertension,No
+353,Paula Gomez,51,Female,137.549.9241x519,None,Yes
+354,John Brady,61,Female,921-952-2593,Diabetes,No
+355,Joel Ferguson,79,Male,(929)395-4476,Diabetes,No
+356,Sharon Jones,72,Male,607-013-1157x67545,Diabetes,Yes
+357,Justin Pierce,70,Female,291-803-1702,Hypertension,No
+358,Lisa Sanders,74,Female,872-860-3166x5194,None,No
+359,Samantha Thompson,79,Male,001-941-197-0009x4153,Diabetes,No
+360,Eric Rose,71,Male,(151)048-6925,Hypertension,No
+361,Jonathan Garcia,46,Male,(698)848-1896x341,None,No
+362,Christopher Zimmerman,37,Male,001-643-912-5542,Hypertension,No
+363,Jeffery Garrett,49,Male,3175730595,Diabetes,Yes
+364,Christine Serrano,26,Male,+1-531-914-6598x07941,Hypertension,No
+365,Alejandro Abbott,51,Female,271-854-4803,None,Yes
+366,Shawn Brown,53,Female,063-597-9999x8081,Hypertension,No
+367,Melissa Green,72,Female,971.054.0363x5460,Heart Disease,No
+368,Daniel Pena,44,Male,108-091-6398x1905,Hypertension,No
+369,Justin May,49,Male,801-185-6052x291,Diabetes,No
+370,Leslie Evans,55,Female,714.230.4036x121,Heart Disease,No
+371,Daniel Young,55,Female,(931)039-8843x57637,None,Yes
+372,Michelle Cook,70,Male,001-331-949-8111x839,None,Yes
+373,Stacey Gomez,22,Female,539.699.9553x484,Hypertension,Yes
+374,Isaac Garcia,60,Male,1110289243,Hypertension,No
+375,Angelica Patton,29,Male,759-187-6595,Diabetes,Yes
+376,Michael Miller,71,Female,001-440-620-5384x320,Hypertension,No
+377,Cynthia Hall,76,Female,(801)370-6515,Diabetes,Yes
+378,Timothy Allen,59,Female,932-711-1350,None,Yes
+379,Danielle Combs,56,Male,286.044.6504x882,None,Yes
+380,Kathryn Mclaughlin,22,Female,3841883289,None,Yes
+381,Teresa Caldwell,80,Female,846.866.9321,Hypertension,Yes
+382,Dr. Terry Floyd,79,Male,655-248-5335,Heart Disease,Yes
+383,Krista Murray,63,Female,646-072-1877x8852,Heart Disease,No
+384,Glen Sanchez,24,Male,(997)674-3534x535,None,No
+385,David Schultz,43,Female,(629)285-1297x2844,Hypertension,Yes
+386,Sheila Martinez,35,Female,526-231-6777,Heart Disease,Yes
+387,Henry Atkins,68,Male,443-880-0518x6368,Diabetes,Yes
+388,Matthew Stevens MD,26,Female,779.160.5432x19310,Hypertension,No
+389,Matthew Jimenez,32,Male,322.825.6817x77224,Hypertension,No
+390,Dr. James Robertson Jr.,30,Male,666.860.7208x368,Heart Disease,No
+391,Dawn Romero,80,Female,001-121-632-2421x994,Diabetes,No
+392,Randy Stewart,50,Female,919-257-5043x36555,Heart Disease,Yes
+393,Mario Berry,25,Female,001-031-941-4683x51005,Heart Disease,No
+394,Lindsey Nunez,57,Female,001-021-409-1561,Diabetes,No
+395,Emily Jones,52,Female,+1-533-778-8684,Diabetes,No
+396,Andrea Bowen,74,Female,6925451536,Diabetes,Yes
+397,Mary Briggs,23,Male,+1-968-965-2640,None,Yes
+398,Desiree Long,73,Male,854.193.7634x1693,Diabetes,No
+399,William Miller,60,Male,(948)372-5305x1394,None,No
+400,Anthony Ramsey,60,Female,9461903373,Diabetes,No
+401,Preston Li,32,Female,(427)876-3927x03027,Heart Disease,No
+402,Brian Peters,60,Male,467.005.2990x526,None,No
+403,Laura Reid,21,Female,+1-616-368-9248,Heart Disease,No
+404,Amanda Kelly,61,Female,373.960.7959x87517,Heart Disease,No
+405,Heather Johnson,68,Male,896-274-3234x743,Diabetes,Yes
+406,Emily Sullivan,38,Male,8148907932,Hypertension,No
+407,Rachael Hutchinson,76,Female,7219589078,None,No
+408,Mary Gomez,47,Male,+1-879-963-2705x38319,Heart Disease,Yes
+409,Joshua Rivera,22,Female,(844)358-8751x19103,Hypertension,No
+410,Brittany Lopez,21,Male,873-245-4042x6893,Heart Disease,No
+411,Kristy Reed,59,Male,284.125.0657x083,Heart Disease,No
+412,James Jones,62,Female,072-557-8913,Hypertension,No
+413,Thomas Morgan,38,Male,(074)396-6215x41846,Diabetes,No
+414,Hector George,43,Female,170.172.2375x867,None,No
+415,Frank Miller,35,Male,3911133047,Hypertension,No
+416,James Smith,60,Female,001-110-858-6750x445,None,No
+417,Andrew French,29,Female,(377)409-9449x8655,Diabetes,No
+418,Samuel Obrien,32,Female,+1-193-133-7042x818,Diabetes,Yes
+419,Kevin Lawson,76,Female,7353096558,Heart Disease,Yes
+420,Katie Roberts,22,Female,935.973.2981,Diabetes,Yes
+421,Isaac Roberts,22,Female,182.910.7180x84653,None,No
+422,Rhonda Wilson,28,Female,(685)447-2829,Diabetes,Yes
+423,Andrew Davis II,80,Female,001-175-203-9204x31721,None,Yes
+424,Scott Smith,26,Female,541.342.7981,Diabetes,No
+425,David Johnson,63,Female,5757135780,Diabetes,No
+426,Cassandra Montgomery,56,Male,(278)883-1042,Diabetes,Yes
+427,Laura Melendez,56,Male,024.532.0390,Hypertension,Yes
+428,Melissa Hull,42,Female,001-694-404-5808x555,Hypertension,No
+429,Jessica Castillo,64,Male,+1-561-882-7667x2123,Diabetes,Yes
+430,Joshua Juarez,59,Female,494-587-3768x938,Diabetes,No
+431,Patrick Nichols,62,Female,260.359.4314x56144,Heart Disease,Yes
+432,Stephen Guerrero,47,Male,021.252.8597,Hypertension,Yes
+433,Paul Porter,56,Female,987-473-3014x8892,Heart Disease,Yes
+434,William Simmons,43,Male,973-360-1318,Heart Disease,No
+435,Blake Moon,48,Female,671.771.3961x0094,None,Yes
+436,Marcus Phillips,43,Female,001-689-024-9264,None,No
+437,Kelly Sawyer,61,Female,454.358.4667,None,Yes
+438,Jessica Brooks,63,Female,001-633-258-0715x906,None,No
+439,Teresa Houston,42,Male,995-987-9257,None,No
+440,John Mathis,26,Female,230-186-4792x691,None,Yes
+441,Hunter Perry,69,Male,6398324292,Heart Disease,No
+442,Jason Atkinson,75,Female,(510)394-9307,Heart Disease,Yes
+443,Martha Gray,44,Female,076.938.1940x42917,None,Yes
+444,Arthur Lawson,62,Female,998-076-9856,Hypertension,Yes
+445,Joel Zhang,73,Female,692-827-9860x701,None,No
+446,James Phillips,79,Female,(533)044-8476,Heart Disease,Yes
+447,Kristen Berger,65,Female,875-253-6900,Heart Disease,Yes
+448,Kathleen Nguyen,42,Male,385-376-1212,Heart Disease,Yes
+449,Tammy Hays,49,Male,266-855-1952,Hypertension,Yes
+450,Shirley Velazquez,31,Male,+1-411-176-5108x7040,Hypertension,Yes
+451,Marisa Dodson,68,Male,535-376-2385x4632,Hypertension,Yes
+452,Brandon Simmons,43,Male,(182)098-9909x484,Diabetes,No
+453,Wayne Lewis,42,Male,689-832-1683x10431,Hypertension,Yes
+454,Amanda Pugh,58,Male,001-065-493-8865x925,None,Yes
+455,Stacey Harris,35,Male,2736223915,Diabetes,Yes
+456,Colleen Lamb,67,Female,216.840.1206,Heart Disease,Yes
+457,Alice Reid,20,Female,734-074-6435x0133,Diabetes,Yes
+458,Tammy Wall,61,Female,671-554-6538,Diabetes,Yes
+459,Michael Baker,76,Female,507-193-2449,Diabetes,Yes
+460,Jamie Beard,73,Female,040.116.5027x11197,Heart Disease,No
+461,Kathryn Owens MD,66,Male,+1-618-508-3493x8880,None,Yes
+462,Michael Taylor,59,Female,001-298-995-9560x202,Heart Disease,Yes
+463,Deborah Rodriguez,66,Male,590-892-2834x16136,None,No
+464,Jonathan Harvey,47,Male,369-096-0993x9357,Heart Disease,Yes
+465,Brittany Freeman,76,Male,+1-729-150-1752x6595,Diabetes,No
+466,John Scott,25,Male,+1-842-480-0243,Hypertension,No
+467,Tracey Hernandez,28,Male,070.589.1851x0780,Hypertension,No
+468,Jordan Nguyen,52,Female,+1-626-793-2483x539,Diabetes,No
+469,Veronica Hines,37,Female,699-785-3470x2794,None,No
+470,Robert Mcdonald,63,Female,+1-106-047-8799,None,Yes
+471,Michelle Branch,43,Male,8528542996,Diabetes,No
+472,Kimberly Dalton,72,Male,419.710.9946x709,Hypertension,Yes
+473,Susan Buchanan,29,Female,(141)956-6364x4028,Diabetes,Yes
+474,Erin Marsh,43,Female,217-012-5059x16192,None,No
+475,Olivia Walker,44,Male,(715)254-2561x082,Diabetes,No
+476,Michael Roach,73,Male,326-866-6792,Diabetes,No
+477,Richard Vang,67,Female,+1-683-309-4459x900,Hypertension,No
+478,Joseph Nelson,52,Male,3889609723,Diabetes,No
+479,Sarah Lane,47,Female,(783)343-9934x98236,Heart Disease,No
+480,Jared Rose,20,Male,(574)940-8927x50029,None,Yes
+481,Aaron Lane,43,Female,(931)441-2736x96797,Diabetes,No
+482,Donald Hicks,61,Male,543-740-0934x4262,Heart Disease,No
+483,Aaron Marquez,22,Male,354-594-0845x45625,Heart Disease,No
+484,Thomas Waller,64,Female,459-681-5582,None,Yes
+485,Susan Winters,35,Male,089-127-1644x35507,Heart Disease,No
+486,Joshua Miller,29,Female,001-694-991-9007x192,Hypertension,No
+487,Martin Robles,76,Male,551.655.2369,Hypertension,No
+488,Seth Bryant,32,Male,757-762-0670,Heart Disease,No
+489,Shane Pratt,57,Female,001-760-536-9313x7662,Hypertension,No
+490,Michael Reed,31,Female,2476739303,None,No
+491,Robert Orozco,32,Male,001-506-809-4594x9927,None,Yes
+492,Samantha Weiss,49,Female,228.584.2682x2079,None,No
+493,Jonathan Owens,76,Male,(848)477-6422,None,Yes
+494,Raymond Black,78,Female,+1-679-394-5684x7361,Heart Disease,No
+495,Timothy Scott,46,Male,001-021-074-8935,Heart Disease,Yes
+496,Joanna Reed,61,Female,603.045.2374,Heart Disease,Yes
+497,Keith Pope,25,Male,001-441-484-2438x453,Diabetes,No
+498,Joshua Mckenzie,22,Female,+1-670-802-7414x0245,None,Yes
+499,Lisa Banks,71,Female,060.655.6858x287,Heart Disease,Yes
+500,Samuel Joseph,27,Male,9705875701,Diabetes,Yes
+501,Christopher Ayers,29,Male,248-338-0138x488,None,No
+502,Alison Walls,22,Male,528.935.3319x8317,None,Yes
+503,Sarah Salas,79,Male,+1-270-195-6056,Diabetes,Yes
+504,Joshua Joseph,54,Male,+1-438-747-4446x8220,Diabetes,Yes
+505,Melissa Johnson,31,Male,+1-528-784-7200x07361,None,No
+506,Pamela Williams,31,Female,001-255-454-7693,Heart Disease,No
+507,Cody Best MD,32,Male,(909)738-9606,None,Yes
+508,Breanna Franklin,74,Male,2403677704,Diabetes,Yes
+509,Jaime Ferguson,55,Female,001-851-384-1667x587,Hypertension,No
+510,Kimberly Clark,42,Male,(993)460-9352,Diabetes,Yes
+511,Taylor Burnett,45,Female,373.335.7083x74992,Heart Disease,No
+512,Paula Warren,34,Female,+1-853-943-4703x586,Diabetes,No
+513,Jeffery Ray,54,Female,001-992-000-0930x0682,Diabetes,Yes
+514,Natalie Garcia,34,Female,+1-787-185-5547x159,Hypertension,Yes
+515,Katherine Smith,47,Female,540-833-9892x617,Hypertension,Yes
+516,Casey Smith,63,Female,803-413-6713x8250,Diabetes,Yes
+517,Adam Hancock,73,Male,9941634931,None,No
+518,Ryan Phillips,51,Female,001-887-391-3906x493,Diabetes,No
+519,Amanda Thompson,71,Female,(500)733-5020,None,Yes
+520,Rebecca Gray,57,Male,3242676045,Diabetes,No
+521,Thomas Johnson,70,Female,418.386.3631x3457,Diabetes,No
+522,Reginald Nichols,71,Female,+1-575-169-6099,Hypertension,Yes
+523,Michael Krueger,58,Male,001-617-500-4579x9490,Heart Disease,Yes
+524,Carolyn Sawyer,74,Female,(191)802-1874,Diabetes,No
+525,Julie Haas,40,Female,440.904.4947x070,Diabetes,No
+526,Brandon Waters,44,Female,371.643.5203x166,Diabetes,Yes
+527,Kelly Lopez,65,Female,992.406.3383,Diabetes,Yes
+528,Sophia Franklin,25,Male,+1-838-458-7647,Heart Disease,Yes
+529,Dr. Zachary Ellis,30,Female,(632)619-5282x3161,Hypertension,No
+530,Jacob Hill,57,Male,976-676-5658x730,None,Yes
+531,Robert Holloway,21,Male,918-818-1161x070,None,Yes
+532,Mary Mcbride,76,Female,+1-979-183-5426x2494,Hypertension,Yes
+533,Richard Stafford,61,Female,+1-735-442-7890x10929,None,No
+534,Steven Ramirez,35,Female,(062)548-6951x1967,None,Yes
+535,Jose Castillo,36,Male,+1-307-327-2116,None,Yes
+536,Michele Hernandez,61,Female,735.860.1523,Diabetes,Yes
+537,Mark Martinez,28,Female,(388)501-4104,Heart Disease,Yes
+538,Jacqueline Martin,73,Female,001-299-283-2568x6190,Heart Disease,No
+539,William Davis,61,Male,+1-603-408-3672x89505,Heart Disease,No
+540,Victoria Lewis,62,Male,001-775-370-1525,None,Yes
+541,Makayla Richardson,58,Female,678-968-2194x9758,Heart Disease,No
+542,Rachel Medina,74,Female,393.172.7157,Diabetes,No
+543,Erika Lopez,20,Female,042-862-6771,Diabetes,Yes
+544,Carla Petersen,72,Female,+1-561-365-1935x84979,Heart Disease,No
+545,Teresa Martin,33,Female,995.476.8136x40515,Diabetes,Yes
+546,Melissa Thompson,28,Male,787-823-2242,None,Yes
+547,Nicholas Hartman,45,Female,(430)031-6748,Diabetes,No
+548,Brian Mejia,20,Male,1640432245,Heart Disease,No
+549,Nathaniel Osborne,76,Female,2304424113,Heart Disease,Yes
+550,Jill Payne,80,Male,031.372.7949,Heart Disease,Yes
+551,Robert Hudson,30,Male,643-349-6269,Heart Disease,No
+552,Jill Craig,24,Female,+1-039-746-5864x39204,None,Yes
+553,Victor Miller,74,Male,001-410-519-3727,Hypertension,Yes
+554,Alyssa Cantrell,69,Male,(588)608-0270x0247,Diabetes,No
+555,Kayla Bell,78,Female,381-358-6437,Heart Disease,Yes
+556,Kari Joseph,77,Female,570.985.1206x024,Diabetes,Yes
+557,Stephanie Bryan,59,Female,001-879-833-5095x905,None,Yes
+558,Mr. Jordan Benson,27,Male,001-902-994-7492x523,Diabetes,No
+559,Andrew Chambers,61,Female,001-017-776-8202x7304,Diabetes,No
+560,Angelica Williams,63,Female,627.988.7512x468,None,Yes
+561,Daniel Strickland,48,Male,869.803.8871x757,Hypertension,No
+562,Mark Murphy,57,Male,504.351.7431x4947,None,No
+563,Michael Gentry,46,Female,333-201-6145,Diabetes,No
+564,Ashlee Hoffman,78,Female,333-089-2763,None,No
+565,Tom Williams,39,Male,001-902-159-1755,Hypertension,No
+566,Melanie Johnson,31,Female,(747)167-3592x5708,Hypertension,Yes
+567,William Reynolds,56,Female,154-048-8709x497,None,Yes
+568,Amanda Wells,25,Female,780.076.7673,None,Yes
+569,Mark Hudson,40,Female,597.091.1863x4558,Hypertension,No
+570,Walter Brown,40,Male,281-443-5578,None,Yes
+571,Robert Nelson,68,Male,9400544587,Hypertension,Yes
+572,Heather Gonzalez,22,Male,(970)016-7967,None,Yes
+573,Regina Rich,42,Male,(744)905-5820,None,Yes
+574,Megan Stone,76,Female,246-127-9602x849,Heart Disease,No
+575,Patricia Freeman,40,Male,001-372-253-2180,Heart Disease,No
+576,Katrina Williams,30,Female,001-637-477-6413x26568,Hypertension,Yes
+577,Mark Hanson,33,Male,640-434-6457,Hypertension,No
+578,Timothy Sexton,75,Male,181.700.1793x6919,Heart Disease,No
+579,Brooke Brown,24,Female,(856)051-5364,None,No
+580,Seth Barber,51,Female,001-200-624-2607,Hypertension,Yes
+581,Alexander Pena,63,Female,(180)531-9913,Diabetes,No
+582,Chase Joseph,38,Female,407.759.1477,Heart Disease,No
+583,Evan Jones,23,Male,468-791-1439,Diabetes,No
+584,Linda Thompson,77,Male,0284985269,Diabetes,Yes
+585,Mark Browning,28,Male,2872487899,Hypertension,Yes
+586,Rachel Fuentes,77,Female,(944)649-0843x23997,Heart Disease,Yes
+587,Robert Barber Jr.,24,Female,047.362.4880,Diabetes,No
+588,Aaron Cohen,50,Male,001-890-610-4056,Hypertension,No
+589,Desiree Martin,70,Female,+1-896-816-4454,None,Yes
+590,Denise Garcia,66,Female,181.898.1768x09388,None,Yes
+591,Laura Sanchez,74,Female,028.529.5221,Heart Disease,No
+592,Raymond Ellis,64,Male,330-590-9098,Heart Disease,Yes
+593,David Carroll,76,Male,+1-737-507-3615x59242,Hypertension,Yes
+594,Cheyenne Rivas,33,Male,+1-858-821-6620,None,Yes
+595,Michelle Frank,62,Female,+1-288-447-8890x0949,Hypertension,No
+596,Rhonda Dean,65,Male,806-952-0823x2974,Diabetes,No
+597,Christina Peters,75,Male,001-554-558-4159,None,No
+598,Monique Miller,70,Female,(381)697-9567,Diabetes,Yes
+599,Billy Allen,46,Female,+1-509-264-7583,Hypertension,Yes
+600,Anna Gibson,53,Female,001-715-987-1325x872,Hypertension,No
+601,Zachary Oneal,67,Male,001-185-938-6081,Hypertension,No
+602,James Whitaker,60,Male,(021)121-9211x5813,Heart Disease,No
+603,Daniel Duncan,26,Male,+1-561-687-9036,Hypertension,Yes
+604,Jill Hughes,25,Male,001-632-083-5585x58436,Heart Disease,No
+605,Andrew Russell,78,Male,+1-063-507-5264,Diabetes,Yes
+606,Julian Kelly,76,Female,(085)013-7779,Diabetes,No
+607,Douglas Howard,65,Male,+1-927-155-0565x035,None,Yes
+608,Amy Frederick MD,68,Male,(333)457-2729x67581,None,No
+609,Shawn Charles,29,Female,245-727-3255,Heart Disease,Yes
+610,Elijah Pierce,43,Female,039-560-8253,None,Yes
+611,Matthew Ramos,52,Female,+1-876-051-6321,Diabetes,Yes
+612,Stephen Morris,36,Female,(349)870-1496,Hypertension,Yes
+613,Daniel Martin,33,Male,(870)681-1854,Diabetes,Yes
+614,Darryl Fuller,70,Male,209.043.4949x1849,Heart Disease,No
+615,Elizabeth Tanner MD,50,Female,(770)880-3337,Heart Disease,Yes
+616,Lauren Griffith,79,Male,(881)776-0604x57262,Hypertension,No
+617,Mark Thomas,69,Male,582.904.4136x81247,Heart Disease,No
+618,Tiffany Sanford,38,Female,(014)156-6856x625,Diabetes,No
+619,Jessica Larsen,35,Female,001-023-382-3683x6470,None,Yes
+620,Stanley Andrade,63,Male,(520)745-6002,Heart Disease,No
+621,Heather Calhoun,43,Male,001-113-963-9305x87524,Diabetes,Yes
+622,Megan Bender,30,Male,672-120-1791x945,Hypertension,Yes
+623,Brett Ramirez,75,Female,906-464-1853x005,Hypertension,Yes
+624,Sabrina Zhang,39,Male,+1-465-562-1123x6346,None,Yes
+625,Levi Sanders,34,Female,001-072-284-0453x89621,None,Yes
+626,Andrew Davis,48,Female,(439)788-2853,None,No
+627,Kayla Gray,61,Female,408-830-3083x571,Heart Disease,Yes
+628,Shelia Kim,29,Female,001-056-504-6934x068,Heart Disease,Yes
+629,Alex Ramos,67,Female,773-459-1847x617,Hypertension,Yes
+630,Kristy Melendez,65,Female,+1-421-078-3549x44036,None,Yes
+631,Kevin Singleton,46,Female,255.705.2654x7613,Heart Disease,Yes
+632,Madeline Peterson,45,Female,001-893-860-3223x793,Hypertension,No
+633,Douglas Giles,42,Male,103.849.4274x5150,Hypertension,No
+634,Robert Gill,38,Male,848-087-3319x583,Heart Disease,Yes
+635,Amber Murphy,44,Female,9047638014,Hypertension,No
+636,Christopher Alexander,32,Male,7210296167,Hypertension,No
+637,Shawn Ortiz,30,Female,001-491-322-0575,Heart Disease,Yes
+638,Alexa Robinson,58,Female,161.454.5224,None,Yes
+639,Keith Martinez,65,Female,001-998-914-7497x56372,Heart Disease,No
+640,Austin Hayes,42,Male,(877)299-3252x964,Heart Disease,No
+641,Frank Stanley,25,Male,+1-792-696-7491,None,Yes
+642,Gwendolyn Macdonald,40,Male,(064)481-5843x49088,Heart Disease,Yes
+643,Robert Small,70,Male,044-284-5337x696,Heart Disease,No
+644,Joshua Bell,66,Male,001-906-994-0447x6030,Hypertension,No
+645,Robin Paul DVM,21,Male,001-298-959-1411,None,Yes
+646,Raymond Barnett,71,Female,8027464144,Heart Disease,No
+647,Nathaniel Davis,74,Male,841.627.4948x204,Hypertension,No
+648,Rhonda Ward,22,Female,0791261088,Diabetes,No
+649,Mr. Mark Paul,65,Male,+1-327-708-7543x658,Heart Disease,No
+650,Connie Payne,35,Female,010-322-5509x1660,Hypertension,Yes
+651,Austin Wright,35,Male,(147)732-0384x939,Hypertension,Yes
+652,Alison Brewer,63,Male,047.144.3059,None,No
+653,Angel Maddox,68,Male,991-555-7113,Diabetes,No
+654,Mr. Christopher Cruz,59,Male,(008)325-2565,Heart Disease,Yes
+655,Juan Burke,38,Male,(194)161-0497x107,Heart Disease,No
+656,Amy Wells,42,Female,001-424-324-5578,Hypertension,No
+657,Lori Turner,79,Male,4177178226,Hypertension,No
+658,Barbara Cooper,38,Female,649-335-5726x52092,Diabetes,No
+659,Henry Maldonado,37,Female,330-592-5982x565,Heart Disease,No
+660,William Miller,50,Male,433.198.6784,Hypertension,Yes
+661,James Mills,72,Male,490-995-1337,Hypertension,Yes
+662,Kyle Beard,69,Female,956.395.0239x4953,Hypertension,No
+663,Tammy Moran,41,Male,+1-527-118-2614x5605,Diabetes,Yes
+664,Sharon Coffey,55,Female,001-473-339-6188x72972,None,No
+665,Dr. Sarah Bates,51,Male,(702)505-0028x462,Diabetes,Yes
+666,Alisha Hamilton,54,Female,636.673.4902,Hypertension,Yes
+667,Nicholas Lam,57,Female,870.283.4112,Heart Disease,No
+668,David Medina,53,Male,(277)967-7533x368,Heart Disease,Yes
+669,Rachel Duke,74,Female,001-500-853-4114x912,Diabetes,No
+670,Kevin Martin,50,Male,001-295-605-4654x831,None,Yes
+671,Brittany Davidson,77,Male,696-382-9353,Hypertension,No
+672,Austin Meyer,32,Male,+1-423-518-7105x425,Hypertension,Yes
+673,Charles Boyer,54,Male,884-441-2733,Heart Disease,No
+674,Lisa Austin,80,Male,001-208-291-6747x5243,Diabetes,Yes
+675,Christopher Myers,75,Male,216-057-8998x7490,None,Yes
+676,Ernest Clark,20,Male,+1-144-255-6113x15457,None,No
+677,Tyrone Franklin,70,Female,(267)685-2567,Diabetes,Yes
+678,Dorothy Davis,73,Male,357.074.1935x609,None,Yes
+679,Jeffrey Robinson,80,Female,187-386-6502x72692,None,No
+680,Nicole Smith,62,Male,001-953-411-3604x142,Heart Disease,Yes
+681,Raymond Lucas,56,Male,001-870-833-4010x2635,Hypertension,No
+682,Jessica Benjamin,66,Female,(498)599-1772,None,Yes
+683,Chase Jones,72,Male,(296)949-6309,Diabetes,No
+684,Jennifer Turner,40,Male,785-650-1942x8295,Diabetes,No
+685,Scott Matthews,46,Male,990.317.2251,Diabetes,Yes
+686,Michael Davis,54,Female,+1-667-415-9956x939,Heart Disease,No
+687,Gregory Smith,63,Female,001-328-612-9066x75403,None,Yes
+688,Joshua Hernandez,39,Male,001-026-218-4210x365,Hypertension,No
+689,Carla Johnson,57,Female,001-530-724-7108x10146,Hypertension,No
+690,Christopher Bowman,39,Female,1113044563,Hypertension,No
+691,Kevin Mosley,71,Female,946-316-6024x990,Hypertension,No
+692,Joy Collins,29,Male,649.143.5672x8381,Diabetes,Yes
+693,Larry Reyes,72,Female,+1-444-567-0223x210,Hypertension,No
+694,Jennifer Wilson,36,Male,2445523340,Hypertension,No
+695,Michael Wright,76,Male,(493)346-4009x5131,None,No
+696,Kyle Beasley,79,Female,077-973-9986x6892,Hypertension,Yes
+697,Bryan Townsend,55,Female,001-140-008-2413x64889,None,Yes
+698,Norman Rodriguez,55,Female,(175)163-9610x23122,None,Yes
+699,Donald Rose,29,Female,(381)602-5318x42937,Diabetes,Yes
+700,Martin Whitney,35,Female,001-561-819-4219x7316,Diabetes,No
+701,Jamie Schultz,69,Male,(963)153-0453,Heart Disease,No
+702,Mariah Riley,29,Female,983-662-6951x598,None,No
+703,Teresa Evans,40,Male,(763)254-2065,None,Yes
+704,Rachel Morris,54,Male,(970)170-1403x0729,Hypertension,Yes
+705,Cole Trujillo,21,Male,(447)311-0172x64827,None,No
+706,Ray Parks DDS,27,Male,866-489-5470x122,Hypertension,No
+707,Sheila Brady,59,Male,099.417.9273x7577,Heart Disease,No
+708,Allen Booth,62,Female,001-380-660-5914x464,Hypertension,No
+709,Tammy Wilson,51,Male,453-155-1316,Hypertension,No
+710,Christopher Lucas DDS,22,Female,780-035-1321x32070,Diabetes,No
+711,Brian Martin,50,Female,+1-224-099-3114x43012,Heart Disease,Yes
+712,Patricia Morgan,72,Male,(105)255-1730,Hypertension,Yes
+713,Rhonda Johnson,49,Female,001-567-543-9432x14610,Heart Disease,Yes
+714,Spencer Douglas,47,Male,(721)087-9600x026,Diabetes,No
+715,Diana Page,35,Female,(717)527-5632x4354,Hypertension,Yes
+716,Alan Willis,71,Male,395-339-4737,Hypertension,Yes
+717,Megan Rogers,24,Female,(667)622-1518,Heart Disease,No
+718,Sara Avila,67,Male,+1-269-337-9568x01420,Heart Disease,No
+719,Eric Payne,22,Male,1540051298,Heart Disease,No
+720,William Lewis,70,Male,628-493-7070x9438,Heart Disease,No
+721,James Taylor,31,Male,722.121.6189x647,None,No
+722,Melissa Campos,46,Female,450-677-7634,None,Yes
+723,Douglas Mcfarland,79,Female,456-415-8908,Heart Disease,Yes
+724,Steven Park,37,Male,001-763-750-5709x14842,None,No
+725,Melissa Ferguson,62,Male,001-031-888-9416x2047,Heart Disease,No
+726,Melissa Smith,79,Female,+1-597-965-2499x6913,None,Yes
+727,Michael Robinson,28,Male,894-785-4672,Diabetes,No
+728,Nicole Daniel,80,Male,3515825974,Heart Disease,No
+729,Scott Brooks,25,Female,001-835-361-9208x875,Heart Disease,No
+730,George Morales,49,Female,(286)182-6777x2130,None,No
+731,Dr. Debra Lynch,47,Male,+1-983-204-5480x803,Heart Disease,No
+732,Joseph Salinas,70,Female,291.066.2960x3558,Diabetes,Yes
+733,Barbara Santana,62,Male,761-425-2827,Diabetes,Yes
+734,Joseph Castaneda,45,Female,+1-087-210-7370x0254,Diabetes,Yes
+735,Allison Howard,39,Male,+1-572-720-5827x67628,Heart Disease,No
+736,Jasmin Roberts,55,Male,(464)964-4409x212,Hypertension,Yes
+737,Dana Pierce,54,Female,001-035-941-6734x624,Diabetes,Yes
+738,Faith Hardy,58,Male,001-351-917-2350x591,Diabetes,No
+739,David Ellis,41,Female,(132)136-7601x330,Hypertension,No
+740,Leslie Brown,64,Male,628-565-5643x7765,Heart Disease,No
+741,Nicole Evans,59,Female,9667042723,Hypertension,Yes
+742,Deborah Lara,45,Female,742-075-3055x76738,Diabetes,Yes
+743,Jonathan Lewis,75,Male,016.229.5287,Hypertension,Yes
+744,James Smith,25,Male,387-518-0525x2745,Heart Disease,No
+745,Wendy Giles,67,Male,473.001.2672,Heart Disease,No
+746,Lori Palmer,68,Female,001-401-925-8184x430,Hypertension,No
+747,Thomas Ross,26,Female,(238)346-9221,None,Yes
+748,Michelle Garcia MD,32,Male,562.464.7044,Hypertension,No
+749,Aaron Terry,46,Male,915.821.4408,Diabetes,No
+750,Jose Martinez,55,Female,001-300-699-7388x63727,Hypertension,No
+751,Lynn Thomas,34,Male,3248733312,Diabetes,No
+752,Donald Campbell,35,Male,+1-578-991-5166x176,Heart Disease,Yes
+753,Brian Davis,53,Male,+1-176-499-6442,Diabetes,No
+754,Benjamin Torres,47,Female,001-091-437-7914x7116,Diabetes,Yes
+755,Michael Mitchell,72,Male,335.358.1884,Diabetes,No
+756,Frank Nichols,59,Female,+1-462-915-2741x37376,Hypertension,No
+757,Jessica Gibson,54,Female,(118)154-4835x0122,None,No
+758,Courtney Golden,35,Female,250-473-0406x803,None,No
+759,Wanda Lee,20,Male,(733)212-4772x603,Hypertension,No
+760,Timothy Hill DDS,76,Male,(019)355-1725,None,No
+761,Joseph Tyler,44,Female,713-195-7359x5643,Diabetes,No
+762,Danny Mcbride,69,Male,+1-831-460-9134x5319,None,No
+763,Amanda Matthews,55,Male,680-967-3385x5459,Hypertension,No
+764,Ryan Stark,33,Female,487-808-4092x3883,Heart Disease,No
+765,Ann Walker,64,Female,339.567.9269x272,Diabetes,No
+766,Lisa Castaneda,61,Male,602-561-0976x042,Heart Disease,No
+767,Jessica Mcdaniel,53,Female,001-646-325-1225x27621,Diabetes,Yes
+768,Suzanne Burton,36,Male,001-158-562-2140,None,Yes
+769,Rebecca Bruce,74,Female,001-702-456-5405,Heart Disease,Yes
+770,Andrew Hart,43,Male,032-674-7698,None,Yes
+771,Jennifer Bentley,74,Female,(195)548-1192x94092,Diabetes,No
+772,Michael Melendez,75,Male,001-317-818-1203x210,Diabetes,No
+773,Michelle Wu,80,Male,082-954-8801x9427,Hypertension,No
+774,Scott Price,33,Female,770-639-1603x131,Hypertension,Yes
+775,Joshua Cole,31,Female,001-032-432-6229x94676,None,Yes
+776,Benjamin Hopkins,61,Male,(180)630-3846x11745,Hypertension,Yes
+777,Miguel May,49,Male,042.771.9531x1031,Diabetes,Yes
+778,Rachael Ross,50,Female,857.544.0052,None,Yes
+779,David White,26,Female,219.842.3671x78650,Heart Disease,Yes
+780,Bill Copeland,55,Female,+1-105-704-6019x4003,Heart Disease,Yes
+781,Katherine Williams,22,Male,(853)149-8141,Hypertension,No
+782,William Davis,29,Female,+1-566-983-7868,Heart Disease,Yes
+783,Lisa Wallace,68,Female,344-618-6707,None,No
+784,Debra Moore,76,Male,001-087-530-5570x475,Diabetes,No
+785,Mary Ellis,60,Male,001-755-642-3121x7400,Diabetes,No
+786,Taylor Cummings,63,Male,485.099.0346x625,Heart Disease,Yes
+787,Scott Mathis,23,Male,(482)168-2234,None,Yes
+788,Dillon Reynolds,70,Male,487.269.6949,None,No
+789,Robert Ford,25,Male,209.025.8426,Diabetes,No
+790,Jesse Dunlap,52,Male,3232376231,Heart Disease,Yes
+791,Jorge Gomez,29,Male,+1-897-540-2970x1590,None,No
+792,Robert Zuniga,38,Male,906-074-4431,None,No
+793,Cole Cooley,60,Female,530.280.2623x236,None,Yes
+794,Veronica Poole,29,Female,325.078.8536,Hypertension,No
+795,Rebecca Brown,39,Female,016.558.5432x80572,None,Yes
+796,Christopher Smith,59,Male,(127)384-2636x371,None,No
+797,James Olson,49,Female,001-821-721-9576x594,Heart Disease,Yes
+798,Wyatt Becker,27,Male,307.229.0015x5360,Diabetes,Yes
+799,Brett Kennedy,49,Male,580.256.4158x935,Diabetes,No
+800,Darryl Rowland,51,Male,+1-267-925-0712,Heart Disease,Yes
+801,Eric Russell,42,Male,012-820-7730,None,Yes
+802,Kevin Rogers,55,Female,001-498-962-0208,Hypertension,Yes
+803,Charles Howard,78,Female,213-179-5119,Heart Disease,Yes
+804,Kenneth Obrien,43,Male,(408)262-6383x83620,Hypertension,Yes
+805,Edward Eaton,48,Male,001-951-256-3945x3503,Heart Disease,Yes
+806,Mrs. Lauren Moore,20,Female,901.734.6621x48257,Heart Disease,No
+807,Andrew Fernandez,64,Male,809.605.7832,None,Yes
+808,Lori Bates,66,Female,5225983073,None,Yes
+809,Megan Hayden,77,Female,443-118-7061,Diabetes,Yes
+810,Michelle Leblanc,48,Female,936-218-3305,Heart Disease,No
+811,Christopher Hunter,70,Male,285-975-7387,Hypertension,Yes
+812,Jason Simmons,70,Male,310-709-3275x473,Diabetes,Yes
+813,Christy Wright,56,Female,+1-837-906-0680x99707,Diabetes,Yes
+814,Larry Mcguire,65,Female,+1-785-922-9151x85854,Diabetes,No
+815,Robert Reid,63,Female,848.904.6090,Diabetes,Yes
+816,Wendy Carrillo,67,Female,7464187902,Diabetes,No
+817,Roger Shepherd,67,Male,644-926-9809,Diabetes,Yes
+818,Mallory Ellison,73,Male,001-988-347-7684,Hypertension,No
+819,Eugene Murray,32,Male,+1-491-258-0906,Hypertension,Yes
+820,Nancy Richardson,72,Female,001-420-438-1082x1673,Diabetes,No
+821,Allen Smith,31,Female,224.253.8857x715,Hypertension,No
+822,Juan Johnson,47,Female,769-524-6403,Diabetes,Yes
+823,Michael Rodriguez,29,Female,481.961.4652x560,Hypertension,Yes
+824,Christopher Harris,44,Male,412-433-9039x43397,Hypertension,No
+825,Jessica Nguyen,21,Female,(099)308-1156x405,Heart Disease,No
+826,Shaun Jones,44,Female,001-117-608-2915x953,Hypertension,Yes
+827,Steve Walker,21,Male,+1-862-119-9105x9208,None,Yes
+828,Mary Berry DDS,39,Female,+1-537-947-5462,Diabetes,Yes
+829,Danielle Mack,52,Female,(164)065-6701,Heart Disease,Yes
+830,Mary Mayo,30,Male,(537)847-3943x227,Heart Disease,Yes
+831,Mason Garcia,39,Male,(585)809-3993,Heart Disease,Yes
+832,Emma Davis,60,Female,9035516034,Heart Disease,No
+833,Leslie Kelly,42,Female,001-417-633-3878,Diabetes,No
+834,Christopher Harris,46,Female,709-033-1870,Diabetes,Yes
+835,Michael Jensen,74,Female,696-976-6098,None,No
+836,Nicole Mcdaniel,36,Male,1194666594,None,No
+837,Mr. Andrew Brown,37,Female,+1-657-545-8940x266,None,Yes
+838,Nicole White,57,Male,761.250.8373x707,Hypertension,Yes
+839,Ann Knight,71,Female,(830)491-6521x6522,Heart Disease,No
+840,Amanda Leon,56,Female,001-948-702-1898x0962,Heart Disease,No
+841,Amy Moore,74,Male,239.582.1426x016,None,Yes
+842,Dwayne Johnson,66,Female,269-792-8660x0561,Hypertension,No
+843,Mrs. Angela Anderson,60,Male,001-409-683-3877x043,Diabetes,Yes
+844,Rebecca Jefferson,51,Male,+1-333-528-3928x1496,None,No
+845,Paul Conley,60,Female,021.484.8532,Diabetes,No
+846,Richard Arias,25,Female,941.539.0063x8669,Heart Disease,Yes
+847,Nicole Marshall,45,Male,+1-363-553-0081x6155,Heart Disease,No
+848,Brianna Hill,79,Female,001-703-909-8822x887,Heart Disease,No
+849,Michael Hood,38,Male,864-405-4925x6987,None,No
+850,Joseph Baldwin,65,Male,1135598600,Diabetes,No
+851,Joseph Tucker,23,Male,802-168-0144,Heart Disease,No
+852,Jason Munoz,57,Male,758.646.4126,Heart Disease,No
+853,Luis Salazar,31,Female,+1-076-723-3237x80436,None,Yes
+854,Daniel Levy,38,Female,001-439-450-8376x493,None,No
+855,Kathryn Perry,73,Male,283.728.5173x151,None,No
+856,Crystal Shaw,73,Male,265.608.3643x9566,None,Yes
+857,Victoria Hall,24,Male,963.010.2596x227,None,Yes
+858,Jody Morgan,66,Female,5940758998,Diabetes,No
+859,Kyle Fields,61,Female,6481587527,None,Yes
+860,Dylan Gonzalez,52,Male,(745)934-1088,Diabetes,No
+861,Brett Branch,42,Male,657-892-2603,None,Yes
+862,Paul Maynard,22,Male,+1-616-679-7680x207,None,Yes
+863,Karen Becker,62,Female,+1-092-510-6173,Hypertension,No
+864,Jennifer Acosta,29,Female,291.896.5123x0291,None,No
+865,Katrina Short,31,Female,001-395-059-7130,None,No
+866,Dalton Hernandez,62,Female,(763)089-4226x4182,None,No
+867,Kristina Burton,69,Male,001-573-555-8099x392,Heart Disease,No
+868,Stephanie Ross,29,Female,(544)807-4599,None,No
+869,Jennifer Mason,31,Male,(700)542-2914,Diabetes,Yes
+870,Leslie Garcia,62,Male,244-920-9757,Diabetes,Yes
+871,Jennifer Williams,31,Female,680.636.8251x197,Diabetes,No
+872,Aaron Obrien,53,Female,+1-000-119-9739x649,Heart Disease,No
+873,Elizabeth Moreno,75,Male,(693)285-7687,None,No
+874,Bryan Mercer,34,Female,+1-202-723-9559x330,Hypertension,Yes
+875,Caitlin West,76,Female,566.202.3104,Diabetes,Yes
+876,Rita Simmons,29,Male,(559)531-2879,None,No
+877,Nathaniel Hudson,50,Female,519-865-3131x43293,Diabetes,Yes
+878,Edward Davis,37,Male,001-752-162-9967x762,Diabetes,No
+879,Roberto Marshall,75,Female,001-172-869-5954x25682,None,No
+880,Robert Wolf,67,Male,(078)407-9118,Diabetes,No
+881,Daniel Diaz,37,Male,(692)350-5415x90344,Heart Disease,Yes
+882,Susan Mcguire,60,Male,3716591179,Hypertension,Yes
+883,Andrew Santos,61,Male,+1-868-369-9238x875,None,Yes
+884,Robert Ward,71,Female,009.129.0065,Diabetes,Yes
+885,James Jones,52,Male,+1-550-601-7280x078,Heart Disease,No
+886,Jennifer Newton,33,Male,001-994-117-5563,Diabetes,Yes
+887,Terry Moreno,63,Male,917.281.9087x3636,Diabetes,No
+888,Brian Turner,62,Male,606-182-8382,Diabetes,No
+889,Brian Johnson,46,Female,001-673-274-9638x482,Hypertension,Yes
+890,Tom Weaver,77,Male,(168)592-5168x295,Heart Disease,No
+891,Daniel Hopkins DVM,48,Male,+1-044-991-1985x433,Hypertension,No
+892,Paige Dominguez,43,Female,5936171291,Heart Disease,No
+893,Kevin Thompson,32,Male,490-797-4280,Heart Disease,No
+894,Zachary Brown,76,Female,787-722-3745x173,None,No
+895,Shawn Garcia,40,Male,597-515-9727,None,Yes
+896,Alex Villarreal,38,Male,001-198-163-7462x3497,Heart Disease,No
+897,Mitchell Kirby,59,Male,(984)553-4316,None,Yes
+898,Joshua Lamb,57,Male,001-797-873-8287x3055,Diabetes,Yes
+899,Tina Russell,49,Male,001-003-831-2613,Heart Disease,Yes
+900,Patricia Smith,64,Male,1903743157,None,No
+901,Raymond Lin,55,Male,001-905-595-0131x3561,None,Yes
+902,Kathryn Lawrence,74,Female,+1-983-854-2751,Heart Disease,Yes
+903,Justin Herrera,39,Male,+1-888-148-7620,Diabetes,No
+904,Paul Nguyen,43,Female,(329)042-2045x148,Diabetes,No
+905,Donald Silva,20,Female,597-710-6177,Diabetes,Yes
+906,Rebecca Wilson,60,Female,001-067-926-7574x830,None,No
+907,Erin Wilson,32,Male,+1-595-219-6813x6447,None,Yes
+908,Danny Greene,67,Female,988-780-3276,None,Yes
+909,Cameron Brown,75,Male,(379)746-7292,Hypertension,No
+910,Tammy Castillo,51,Male,(713)132-7035x2729,Hypertension,Yes
+911,Christine Diaz,73,Female,423-940-1684x582,Hypertension,Yes
+912,Lauren Lee,39,Female,446.835.6049x054,None,Yes
+913,Tami Lawson,76,Female,725-707-1555x77288,None,Yes
+914,Peter Long,74,Male,+1-375-492-7240x21434,Hypertension,Yes
+915,Anna Carey,37,Male,(440)706-0399x3531,Hypertension,No
+916,Marvin Rodgers,48,Male,(796)681-4262,None,Yes
+917,Rebecca Leon,62,Male,223-962-3235x67690,Diabetes,Yes
+918,Ryan Hayden,31,Female,001-230-881-1638x7288,Diabetes,Yes
+919,Nathaniel Crawford,28,Male,386-234-1438x02186,None,Yes
+920,Andrew Kennedy,77,Female,126-361-3886,None,Yes
+921,Mary Ellison,69,Female,+1-268-336-0031x0988,Heart Disease,Yes
+922,Michael Byrd PhD,59,Female,001-954-023-8548,None,No
+923,Jessica Singh,68,Male,+1-508-177-0527x58462,Heart Disease,No
+924,Jennifer Molina,43,Male,001-914-642-0377x58438,Diabetes,Yes
+925,Anthony Thompson,36,Female,016-930-4293,Hypertension,No
+926,Travis Brown,70,Male,3075465682,None,No
+927,Gregory Becker,74,Female,367-637-3822x28562,Diabetes,No
+928,Christy Villegas,24,Male,001-619-996-7538x580,None,Yes
+929,Nichole Barnes,29,Male,029-501-3415,None,No
+930,Jeffrey Hansen,49,Female,603.497.7277,Diabetes,No
+931,Justin Richardson,38,Female,(372)124-5301x17572,Heart Disease,Yes
+932,Angela Rowland,61,Male,546-952-6198,Hypertension,No
+933,Laura Wong,64,Male,(200)434-2073x949,Hypertension,No
+934,Nichole Herman,24,Female,001-659-023-6820x156,None,No
+935,Andrea Hill,35,Male,(798)455-3094,Diabetes,Yes
+936,Tony Mcmahon,79,Male,810.515.9517,Hypertension,No
+937,Jeffrey Wilson,60,Female,+1-990-573-3694x28873,None,Yes
+938,Shaun Jones,21,Male,720.874.3876x68147,Heart Disease,No
+939,Anthony Gray,48,Female,+1-682-366-1149x528,Heart Disease,No
+940,Bonnie Burns,20,Male,706-739-3546x496,Diabetes,No
+941,Robert Bell,57,Male,138.086.8302x9928,Hypertension,No
+942,Sheryl Williams,66,Male,(223)443-2666x3639,None,No
+943,Donna Williams,21,Male,288.306.8630x663,Hypertension,Yes
+944,Andrew Kent,46,Female,7371765056,Diabetes,No
+945,John Hansen,51,Male,001-202-138-6638x243,Heart Disease,Yes
+946,Robin House,27,Male,+1-119-631-3043x056,Heart Disease,No
+947,Jeffrey Peterson,27,Female,859.730.2991,Diabetes,No
+948,Douglas Allen,80,Male,001-286-230-0803,Diabetes,No
+949,Erin Lee,50,Female,(082)226-5830,Hypertension,No
+950,Lindsay Shields PhD,25,Female,119-760-0461x6969,Heart Disease,Yes
+951,Anthony Turner,79,Male,5030722846,Heart Disease,No
+952,Derek Golden,34,Female,(411)400-8994x049,None,No
+953,George Davis,78,Female,077.171.3049x50190,Heart Disease,Yes
+954,Amanda Gould,61,Male,001-341-077-3776,None,Yes
+955,Luke Elliott,22,Female,8592294591,None,Yes
+956,Kimberly Chase,58,Male,(236)297-5464x50294,Heart Disease,No
+957,Timothy Bernard,56,Male,+1-396-784-3832x488,Diabetes,No
+958,Edward Brown,31,Male,(227)000-4343,Hypertension,No
+959,Matthew Herrera,40,Female,041.488.4006x995,None,No
+960,Christopher Morales,67,Male,451.378.2463x44198,Heart Disease,Yes
+961,Bonnie Clements,54,Female,001-823-962-6131x635,None,No
+962,Jennifer Thompson,61,Female,001-891-013-7878,Heart Disease,No
+963,Veronica Delgado,49,Male,982-448-7055,None,Yes
+964,Phillip Li PhD,68,Female,463.316.7907,Heart Disease,Yes
+965,Tanner Booth,40,Female,706.481.3227,Diabetes,No
+966,Bobby Hunt,66,Female,868.632.5896,None,No
+967,Anthony Glass,74,Male,(977)898-1217,Diabetes,No
+968,Michael Robinson,80,Female,(573)842-1582x8917,None,No
+969,Barbara Choi,55,Female,+1-411-192-6767x143,None,No
+970,Jeffrey Ortiz,73,Male,(418)250-3682x0121,Heart Disease,No
+971,Jason Powell,69,Male,890-828-1499x0407,Heart Disease,No
+972,Mikayla Garcia,70,Female,346-777-5124x82429,Heart Disease,No
+973,William Mathis,32,Male,1531850044,Diabetes,No
+974,Katie Hines,69,Male,+1-119-719-0631x89802,Diabetes,No
+975,Kevin Cummings,22,Female,+1-288-743-9770x0471,None,Yes
+976,Linda Anderson,62,Female,157.030.2937x60511,None,Yes
+977,Alexandra Hughes,43,Female,6072710315,Diabetes,Yes
+978,Christina Castillo,52,Male,(734)306-5845,Diabetes,Yes
+979,Melinda Yoder,32,Male,(001)072-0441x61317,Heart Disease,No
+980,Susan Dennis,74,Male,(270)168-1677,Hypertension,No
+981,Sydney Barr,66,Male,+1-311-340-7385,Heart Disease,No
+982,Lindsey Copeland,39,Female,755.966.3405x574,None,No
+983,Daniel Castillo,47,Male,470-690-1633x075,Hypertension,Yes
+984,Henry Hunter,69,Male,950-406-0446x8647,None,No
+985,Devin Evans,33,Male,573.784.2339x1603,Diabetes,No
+986,Patrick Fisher,48,Male,100-336-9423x383,Heart Disease,No
+987,Margaret Mccoy,41,Male,733.766.6677x6265,Hypertension,Yes
+988,Eric Beasley,44,Male,(065)504-7522x666,Hypertension,Yes
+989,Linda Cooper,26,Male,977.714.0808,Hypertension,No
+990,Miguel White,24,Male,609-123-5305,Heart Disease,Yes
+991,Maria Green,74,Female,(166)829-0526x9937,Diabetes,No
+992,Michelle Collins,43,Male,576.530.6197x53859,Heart Disease,No
+993,Bryan Phillips,51,Female,7431924495,Diabetes,No
+994,Megan Rodriguez,31,Female,001-718-786-8474x73010,Heart Disease,Yes
+995,Stephen Lewis,67,Male,+1-881-576-5135x13792,None,Yes
+996,Alexa Johnson,52,Male,001-412-486-4296,Diabetes,Yes
+997,Janet Elliott,60,Female,101-401-4323,Heart Disease,No
+998,Henry Jones,38,Male,461.206.6393x7611,Diabetes,No
+999,Anthony Holmes,31,Female,+1-934-245-1025x398,Diabetes,Yes
+1000,Glenda Baker,29,Male,307.636.0930x00580,None,Yes
