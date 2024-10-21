@@ -35,6 +35,8 @@ This project demonstrates a complete **data engineering pipeline** for a healthc
 This project uses simulated healthcare data, including:
 - Patient records: Contains information such as admission date, treatment history, and doctor assigned.
 - Doctor data: Contains doctor information and shift timings.
+- Treatment Data:Captures information on various treatments administered, including treatment types, dates, and related patient and doctor IDs.
+- Visits Data:Records patient visits to healthcare facilities, detailing visit dates, reasons for visits, and healthcare provider information.
 - ICU device metrics: Data from IoT devices monitoring ICU patients (e.g., heart rate, oxygen levels).
 
 ## Setup Instructions
