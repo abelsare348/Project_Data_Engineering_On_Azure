@@ -50,6 +50,7 @@ This project uses simulated healthcare data, including:
    - Create an **Azure Data Factory** instance for orchestration.
    - Set up **Azure Synapse Analytics** for storage and analytics.
    - Deploy **Azure Logic Apps** and **Azure Functions** for notifications.
+   - Set up **Azure Purview** for Data Governance.
 
 3. Upload the provided datasets into **Azure Data Lake** storage.
 
