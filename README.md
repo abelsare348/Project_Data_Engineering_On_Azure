@@ -24,11 +24,11 @@ This project demonstrates a complete **data engineering pipeline** for a healthc
 
 ## Data Flow Steps
 
-1. **Data Ingestion**: Data is ingested using **Azure Event Hub** for real-time streams (e.g., ICU device metrics) and **Azure Data Factory** for batch processing (e.g., patient records, doctor data).
+1. **Data Ingestion**: Data is ingested using **Azure Event Hub** for real-time streams and **Azure Data Factory** for batch processing (e.g., patient records, doctor data).
 2. **Data Storage**: Raw data is stored in **Azure Data Lake**.
 3. **Data Transformation**: **Azure Databricks** processes and transforms the raw data for ETL pipelines, preparing it for analytics.
 4. **Data Storage in Synapse**: Processed data is loaded into **Azure Synapse Analytics** for analytics using both SQL pools and Spark pools for large-scale analysis.
-5. **Notification Systems**: Custom notifications are sent via **Azure Logic Apps** and **Azure Functions** when certain thresholds are reached (e.g., ICU device failures).
+5. **Notification Systems**: Custom notifications are sent via **Azure Logic Apps** and **Azure Functions** when certain thresholds are reached.
 
 
 ## Setup Instructions
