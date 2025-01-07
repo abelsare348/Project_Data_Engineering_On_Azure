@@ -1,4 +1,4 @@
-# Azure Healthcare Data Engineering Project
+# Azure Data Engineering Project
 
 ## Project Overview
 
